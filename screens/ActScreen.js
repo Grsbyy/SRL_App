@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   explanation: {
     fontSize: 16,
     marginBottom: 10,
+    marginRight: 10,
     textAlign: 'justify',
   },
   buttonContainer: {
