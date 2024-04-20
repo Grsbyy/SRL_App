@@ -44,19 +44,19 @@ const PlanScreen = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, styles.taskPrioritizationButton]}
-            onPress={() => navigateToScreen('TaskPrioritization')}>
+            onPress={() => navigateToScreen('AcadStrat')}>
             <Text style={styles.buttonText}>Academic Strategies</Text>
             <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigateToScreen('GoalSetting')}>
+            onPress={() => navigateToScreen('ASSurvey')}>
             <Text style={styles.buttonText}>Know Suitable Academic Strategies For You</Text>
             <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigateToScreen('GoalSetting')}>
+            onPress={() => navigateToScreen('GWACalc')}>
             <Text style={styles.buttonText}>GWA Calculator</Text>
             <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
           </TouchableOpacity>
