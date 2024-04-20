@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
 import PlanScreen from './screens/PlanScreen';
 import ActScreen from './screens/ActScreen';
 import ReflectScreen from './screens/ReflectScreen';
@@ -25,9 +24,9 @@ const App = () => {
         <Stack.Screen name="TaskPrioritization" component={TaskPrioritizationScreen} />
         <Stack.Screen name="Reflect" component={ReflectScreen} />
         <Stack.Screen name="GoalSetting" component={GoalSettingScreen} />
-        <Stack.Screen name="AcadStrat" component={AcadStratScreen} />
+        <Stack.Screen name="AcadStrat" component={AcadStratScreen} options={{ headerTitle: 'Academic Strategies' }} />
         <Stack.Screen name="ASSurvey" component={ASSurvey} />
-        <Stack.Screen name="GWACalc" component={GWACalcScreen} />
+        <Stack.Screen name="GWACalc" component={GWACalcScreen} options={{ headerTitle: 'GWA Calculator' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
