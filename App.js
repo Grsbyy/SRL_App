@@ -11,6 +11,7 @@ import GoalSettingScreen from './screens/GoalSettingScreen';
 import AcadStratScreen from './screens/AcadStratScreen';
 import ASSurvey from './screens/ASSurvey';
 import GWACalcScreen from './screens/GWACalcScreen';
+import Homescreen from './screens/Homescreen';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
-      
+        <Stack.Screen name="Home" component={Homescreen} options={{ headerShown: null }} />
         <Stack.Screen name="Plan" component={PlanScreen} options={{ headerShown: null }} />
         <Stack.Screen name="Act" component={ActScreen} options={{ headerShown: null }}/>
         <Stack.Screen name="TaskPrioritization" component={TaskPrioritizationScreen} />
