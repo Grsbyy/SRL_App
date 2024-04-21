@@ -157,7 +157,7 @@ const GWACalc = ({ navigation }) => {
       ))}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.calculateButton} onPress={() => Alert.alert(
-          "GWA Result",
+          "GWA Result", 
           `Your GWA is: ${calculateGWA()} ${calculateGWA() <= 1.50 ? "Congratulations! You Are Part of the Director's List!":""}`,
           [
             { text: "OK", onPress: () => console.log("OK Pressed") }
@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 5,
+    fontWeight: 'bold', 
   },
   subjectContainer: {
     flexDirection: 'row',
