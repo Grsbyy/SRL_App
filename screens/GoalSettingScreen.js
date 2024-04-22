@@ -3,32 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
-const Homescreen = ({ navigation }) => {
-  const [quotes] = useState([
-    "The only way to do great work is to love what you do. - Steve Jobs",
-    "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
-    "Believe you can and you're halfway there. - Theodore Roosevelt",
-    "Your limitation—it's only your imagination.",
-    "Push yourself, because no one else is going to do it for you.",
-    "Great things never come from comfort zones.",
-    "Dream it. Wish it. Do it.",
-    "Success doesn’t just find you. You have to go out and get it.",
-    "The harder you work for something, the greater you’ll feel when you achieve it.",
-    "Dream bigger. Do bigger."
-  ]);
-  const [randomQuote, setRandomQuote] = useState('');
-
-  // Generate random quote on component mount
-  useEffect(() => {
-    generateRandomQuote();
-  }, []);
-
-  // Function to generate random quote
-  const generateRandomQuote = () => {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    setRandomQuote(quotes[randomIndex]);
-  };
-
+const GoalSetting = ({ navigation }) => {
+  
   // Function to navigate to respective screens
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
@@ -36,15 +12,6 @@ const Homescreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.greeting}>Hello User</Text>
-        <Text style={styles.quote}>{randomQuote}</Text>
-        <Text style={styles.explanation}>
-          Self-Regulated Learning is the process by which learners take control of their own learning process. 
-          This involves setting goals, managing time effectively, monitoring progress, and adapting learning strategies based on feedback.
-        </Text>
-      </View>
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -97,6 +64,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
+    position: 'absolute',
+    bottom: 20,
     flexDirection: 'row',
     justifyContent: 'center', // Center the buttons horizontally
     width: '100%',
@@ -113,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Homescreen;
+export default GoalSetting;

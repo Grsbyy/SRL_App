@@ -122,13 +122,13 @@ const ReflectScreen = ({ navigation }) => {
             <Text style={styles.label}>Rating of the Day</Text>
             <Picker
               selectedValue={rating}
-              style={{ height: 50, width: 150 }}
+              style={{ height: 40, width: 200 }}
               onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
-              <Picker.Item label="1" value={1} />
-              <Picker.Item label="2" value={2} />
-              <Picker.Item label="3" value={3} />
-              <Picker.Item label="4" value={4} />
-              <Picker.Item label="5" value={5} />
+              <Picker.Item label="1 - Very Good" value={1} />
+              <Picker.Item label="2 - Good " value={2} />
+              <Picker.Item label="3 - Okay" value={3} />
+              <Picker.Item label="4 - Bad" value={4} />
+              <Picker.Item label="5 - Very Bad" value={5} />
             </Picker>
             <TextInput
               style={styles.bigInput}
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     position: 'absolute',
-    top: -625,
+    top: -620,
     right: 20,
   },
   addButton: {

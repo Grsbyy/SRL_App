@@ -60,6 +60,12 @@ const PlanScreen = ({ navigation }) => {
             <Text style={styles.buttonText}>GWA Calculator</Text>
             <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigateToScreen('AcadStrat')}>
+            <Text style={styles.buttonText}>Other Study Techniques</Text>
+            <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
 
@@ -92,6 +98,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
+    padding: -10,
     paddingBottom: 100, // Add extra space at the bottom for scrolling
   },
   header: {
