@@ -23,7 +23,7 @@ const App = () => {
         <Stack.Screen name="Act" component={ActScreen} options={{ headerShown: null }}/>
         <Stack.Screen name="TaskPrioritization" component={TaskPrioritizationScreen} />
         <Stack.Screen name="Reflect" component={ReflectScreen} options={{ headerShown: null }} />
-        <Stack.Screen name="GoalSetting" component={GoalSettingScreen} />
+        <Stack.Screen name="GoalSetting" component={GoalSettingScreen} options={{ headerTitle: 'Goal Setting' }}/>
         <Stack.Screen name="AcadStrat" component={AcadStratScreen} options={{ headerTitle: 'Academic Strategies' }} />
         <Stack.Screen name="ASSurvey" component={ASSurvey} options={{ headerTitle: ' Survey' }}/>
         <Stack.Screen name="GWACalc" component={GWACalcScreen} options={{ headerTitle: 'GWA Calculator' }} />
