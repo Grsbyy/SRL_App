@@ -12,7 +12,7 @@ const PlanScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>PLANs</Text>
+        <Text style={styles.title}>PLAN</Text>
         <Text style={styles.explanation}>
           The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
         </Text>
