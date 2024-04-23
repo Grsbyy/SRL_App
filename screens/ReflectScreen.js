@@ -4,19 +4,42 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { AntDesign } from '@expo/vector-icons';
+import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase('diary.db');
 
 const ReflectScreen = ({ navigation }) => {
   const [diaries, setDiaries] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [editmodalVisible, setEditModalVisible] = useState(false);
   const [selectedDiary, setSelectedDiary] = useState(null);
   const [date, setDate] = useState('');
   const [title, setTitle] = useState('');
-  const [rating, setRating] = useState(1); // Initialize rating state
+  const [rating, setRating] = useState(1);
   const [howDayWent, setHowDayWent] = useState('');
   const [whatIDidToday, setWhatIDidToday] = useState('');
   const [others, setOthers] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [showSettingsButton, setShowSettingsButton] = useState(true);
+
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS diary (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, title TEXT, rating INTEGER, howDayWent TEXT, whatIDidToday TEXT, others TEXT);'
+      );
+    });
+    fetchDiaries();
+  }, []);
+
+  const fetchDiaries = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM diary',
+        [],
+        (_, { rows: { _array } }) => setDiaries(_array)
+      );
+    });
+  };
 
   const addDiary = () => {
     if (!date || !title || !rating) {
@@ -27,35 +50,55 @@ const ReflectScreen = ({ navigation }) => {
       Alert.alert('Duplicate Date', 'A diary entry already exists for this date. Please select a different date.');
       return;
     }
-    const newDiary = {
-      date,
-      title,
-      rating,
-      howDayWent,
-      whatIDidToday,
-      others
-    };
-    setDiaries([...diaries, newDiary].sort((a, b) => new Date(a.date) - new Date(b.date)));
-    setModalVisible(false);
+    db.transaction(tx => {
+      tx.executeSql(
+        'INSERT INTO diary (date, title, rating, howDayWent, whatIDidToday, others) VALUES (?, ?, ?, ?, ?, ?)',
+        [date, title, rating, howDayWent, whatIDidToday, others],
+        () => {
+          fetchDiaries();
+          setModalVisible(false);
+          resetInputs();
+        }
+      );
+    });
   };
-
-  const removeDiary = (index) => {
-    const updatedDiaries = [...diaries];
-    updatedDiaries.splice(index, 1);
-    setDiaries(updatedDiaries);
-  };
-
+  
   const editDiary = () => {
-    const updatedDiaries = diaries.map(diary => diary.date === selectedDiary.date ? {
-      date,
-      title,
-      rating,
-      howDayWent,
-      whatIDidToday,
-      others
-    } : diary);
-    setDiaries(updatedDiaries);
-    setSelectedDiary(null);
+    if (!date || !title || !rating) {
+      Alert.alert('Incomplete Entry', 'Please input date, title, and day rating to submit.');
+      return;
+    }
+    db.transaction(tx => {
+      tx.executeSql(
+        'UPDATE diary SET date=?, title=?, rating=?, howDayWent=?, whatIDidToday=?, others=? WHERE id=?',
+        [date, title, rating, howDayWent, whatIDidToday, others, selectedDiary.id],
+        () => {
+          fetchDiaries();
+          setEditModalVisible(false);
+          setSelectedDiary(null);
+          resetInputs();
+        }
+      );
+    });
+  };
+
+  const removeDiary = (id) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'DELETE FROM diary WHERE id=?',
+        [id],
+        () => fetchDiaries()
+      );
+    });
+  };
+
+  const resetInputs = () => {
+    setDate('');
+    setTitle('');
+    setRating(1);
+    setHowDayWent('');
+    setWhatIDidToday('');
+    setOthers('');
   };
 
   const navigateToScreen = (screenName) => {
@@ -75,22 +118,45 @@ const ReflectScreen = ({ navigation }) => {
     hideDatePicker();
   };
 
+  const viewDiary = (diary) => {
+    Alert.alert(
+      `Diary Entry - ${diary.date}`,
+      `Title: ${diary.title}\nRating: ${diary.rating}\nHow the day went: ${diary.howDayWent}\nWhat I did today: ${diary.whatIDidToday}\nOthers: ${diary.others}`,
+      [{ text: 'OK' }]
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>REFLECT</Text>
+      <Text style={styles.header}>REFLECTs</Text>
       
       <ScrollView style={styles.diariesContainer}>
-        {diaries.map((diary, index) => (
+        {diaries.map(diary => (
           <TouchableOpacity
-            key={index}
-            onPress={() => setSelectedDiary(diary)}
+            key={diary.id}
+            onPress={() => {
+              setSelectedDiary(diary);
+              setDate(diary.date);
+              setTitle(diary.title);
+              setRating(diary.rating);
+              setHowDayWent(diary.howDayWent);
+              setWhatIDidToday(diary.whatIDidToday);
+              setOthers(diary.others);
+              setEditModalVisible(true);
+            }}
             style={styles.diaryItem}>
-            <Text>{diary.date} - {diary.title}</Text>
-            <TouchableOpacity onPress={() => editDiary()} style={styles.editButton}>
+            <View>
+              <Text>{diary.date}</Text>
+              <Text>{diary.title}</Text>
+            </View>
+            <TouchableOpacity onPress={() => setEditModalVisible(true)} style={styles.editButton}>
               <MaterialCommunityIcons name="pencil" size={24} color="blue" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => removeDiary(index)}>
+            <TouchableOpacity onPress={() => removeDiary(diary.id)}>
               <MaterialCommunityIcons name="delete" size={24} color="red" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => viewDiary(diary)}>
+              <AntDesign name="eye" size={24} color="black" />
             </TouchableOpacity>
           </TouchableOpacity>
         ))}
@@ -99,11 +165,11 @@ const ReflectScreen = ({ navigation }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
+        visible={editmodalVisible}
+        onRequestClose={() => setEditModalVisible(false)}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>{selectedDiary ? 'Edit Diary Entry' : 'Add Diary Entry'}</Text>
+            <Text style={styles.modalHeader}>Edit Diary Entry</Text>
             <TouchableOpacity onPress={showDatePicker}>
               <Text style={styles.datePickerText}>{date ? date : 'Select Date'}</Text>
             </TouchableOpacity>
@@ -118,6 +184,76 @@ const ReflectScreen = ({ navigation }) => {
               placeholder="Title"
               value={title}
               onChangeText={(text) => setTitle(text)}
+              maxLength={20}
+            />
+            <Text style={styles.label}>Rating of the Day</Text>
+            <Picker
+              selectedValue={rating}
+              style={{ height: 40, width: 200 }}
+              onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
+              <Picker.Item label="1 - Very Good" value={1} />
+              <Picker.Item label="2 - Good " value={2} />
+              <Picker.Item label="3 - Okay" value={3} />
+              <Picker.Item label="4 - Bad" value={4} />
+              <Picker.Item label="5 - Very Bad" value={5} />
+            </Picker>
+            <TextInput
+              style={styles.bigInput}
+              placeholder="How the day went by?"
+              value={howDayWent}
+              onChangeText={(text) => setHowDayWent(text)}
+            />
+            <TextInput
+              style={styles.bigInput}
+              placeholder="What I did today?"
+              value={whatIDidToday}
+              onChangeText={(text) => setWhatIDidToday(text)}
+            />
+            <TextInput
+              style={styles.bigInput}
+              placeholder="Others"
+              value={others}
+              onChangeText={(text) => setOthers(text)}
+            />
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                onPress={() => setEditModalVisible(false)}>
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.submitButton]}
+                onPress={editDiary}>
+                <Text style={styles.buttonText}>Apply Changes</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalHeader}>Add Diary Entry</Text>
+            <TouchableOpacity onPress={showDatePicker}>
+              <Text style={styles.datePickerText}>{date ? date : 'Select Date'}</Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirmDate}
+              onCancel={hideDatePicker}
+            />
+            <TextInput
+              style={styles.titleInput}
+              placeholder="Title"
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+              maxLength={20}
             />
             <Text style={styles.label}>Rating of the Day</Text>
             <Picker
@@ -156,8 +292,8 @@ const ReflectScreen = ({ navigation }) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.submitButton]}
-                onPress={selectedDiary ? editDiary : addDiary}>
-                <Text style={styles.buttonText}>{selectedDiary ? 'Edit' : 'Submit'}</Text>
+                onPress={addDiary}>
+                <Text style={styles.buttonText}>Submit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -166,7 +302,11 @@ const ReflectScreen = ({ navigation }) => {
       
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => setModalVisible(true)}>
+        onPress={() => {
+          setModalVisible(true);
+          setSelectedDiary(null);
+          resetInputs();
+        }}>
         <MaterialCommunityIcons name="plus" size={24} color="white" />
       </TouchableOpacity>
       
@@ -185,7 +325,6 @@ const ReflectScreen = ({ navigation }) => {
           style={styles.navButton}
           onPress={() => navigateToScreen('Reflect')}>
           <MaterialCommunityIcons name="chart-line" size={40} color="white" />
-    
         </TouchableOpacity>
 
         {showSettingsButton && (
@@ -338,5 +477,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },  
 });
+
+
 
 export default ReflectScreen;
