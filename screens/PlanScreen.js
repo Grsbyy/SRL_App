@@ -12,7 +12,7 @@ const PlanScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>PLAN</Text>
+        <Text style={styles.title}>PLANs</Text>
         <Text style={styles.explanation}>
           The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
         </Text>
@@ -29,6 +29,12 @@ const PlanScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigateToScreen('GoalSetting')}>
           <Text style={styles.buttonText}>Goal Setting</Text>
+          <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigateToScreen('WPlanner')}>
+          <Text style={styles.buttonText}>Weekly Planner</Text>
           <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
         </TouchableOpacity>
       </View>
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    marginBottom: 250,
+    marginBottom: 100,
     width: 320, 
     
   },

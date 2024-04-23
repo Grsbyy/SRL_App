@@ -1,483 +1,242 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('diary.db');
+const db = SQLite.openDatabase('planner.db');
 
-const ReflectScreen = ({ navigation }) => {
-  const [diaries, setDiaries] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [editmodalVisible, setEditModalVisible] = useState(false);
-  const [selectedDiary, setSelectedDiary] = useState(null);
-  const [date, setDate] = useState('');
-  const [title, setTitle] = useState('');
-  const [rating, setRating] = useState(1);
-  const [howDayWent, setHowDayWent] = useState('');
-  const [whatIDidToday, setWhatIDidToday] = useState('');
-  const [others, setOthers] = useState('');
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [showSettingsButton, setShowSettingsButton] = useState(true);
+const TaskPrioritization = ({ navigation }) => {
+  const [mondayTask, setMondayTask] = useState('');
+  const [tuesdayTask, setTuesdayTask] = useState('');
+  const [wednesdayTask, setWednesdayTask] = useState('');
+  const [thursdayTask, setThursdayTask] = useState('');
+  const [fridayTask, setFridayTask] = useState('');
+  const [saturdayTask, setSaturdayTask] = useState('');
+  const [sundayTask, setSundayTask] = useState('');
 
   useEffect(() => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS diary (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, title TEXT, rating INTEGER, howDayWent TEXT, whatIDidToday TEXT, others TEXT);'
+        'create table if not exists tasks (id integer primary key not null, day text, task text);'
       );
     });
-    fetchDiaries();
   }, []);
 
-  const fetchDiaries = () => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * FROM diary',
-        [],
-        (_, { rows: { _array } }) => setDiaries(_array)
-      );
-    });
+  const saveTask = (day, task) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql('insert into tasks (day, task) values (?, ?)', [day, task]);
+        tx.executeSql('select * from tasks', [], (_, { rows }) =>
+          console.log(JSON.stringify(rows))
+        );
+      },
+      null,
+      forceUpdate
+    );
   };
 
-  const addDiary = () => {
-    if (!date || !title || !rating) {
-      Alert.alert('Incomplete Entry', 'Please input date, title, and day rating to submit.');
-      return;
-    }
-    if (diaries.some(diary => diary.date === date)) {
-      Alert.alert('Duplicate Date', 'A diary entry already exists for this date. Please select a different date.');
-      return;
-    }
-    db.transaction(tx => {
-      tx.executeSql(
-        'INSERT INTO diary (date, title, rating, howDayWent, whatIDidToday, others) VALUES (?, ?, ?, ?, ?, ?)',
-        [date, title, rating, howDayWent, whatIDidToday, others],
-        () => {
-          fetchDiaries();
-          setModalVisible(false);
-          resetInputs();
-        }
-      );
-    });
-  };
-  
-  const editDiary = () => {
-    if (!date || !title || !rating) {
-      Alert.alert('Incomplete Entry', 'Please input date, title, and day rating to submit.');
-      return;
-    }
-    db.transaction(tx => {
-      tx.executeSql(
-        'UPDATE diary SET date=?, title=?, rating=?, howDayWent=?, whatIDidToday=?, others=? WHERE id=?',
-        [date, title, rating, howDayWent, whatIDidToday, others, selectedDiary.id],
-        () => {
-          fetchDiaries();
-          setEditModalVisible(false);
-          setSelectedDiary(null);
-          resetInputs();
-        }
-      );
-    });
-  };
-
-  const removeDiary = (id) => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'DELETE FROM diary WHERE id=?',
-        [id],
-        () => fetchDiaries()
-      );
-    });
-  };
-
-  const resetInputs = () => {
-    setDate('');
-    setTitle('');
-    setRating(1);
-    setHowDayWent('');
-    setWhatIDidToday('');
-    setOthers('');
+  const forceUpdate = () => {
+    // Force a re-render to update the UI after saving task
+    // You may need to optimize this, as it's not ideal to force a re-render like this
+    setMondayTask('');
+    setTuesdayTask('');
+    setWednesdayTask('');
+    setThursdayTask('');
+    setFridayTask('');
+    setSaturdayTask('');
+    setSundayTask('');
   };
 
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
   };
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirmDate = (selectedDate) => {
-    setDate(selectedDate.toDateString());
-    hideDatePicker();
-  };
-
-  const viewDiary = (diary) => {
-    Alert.alert(
-      `Diary Entry - ${diary.date}`,
-      `Title: ${diary.title}\nRating: ${diary.rating}\nHow the day went: ${diary.howDayWent}\nWhat I did today: ${diary.whatIDidToday}\nOthers: ${diary.others}`,
-      [{ text: 'OK' }]
-    );
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>REFLECTs</Text>
-      
-      <ScrollView style={styles.diariesContainer}>
-        {diaries.map(diary => (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.greeting}>Weekly Planner</Text>
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Monday</Text>
           <TouchableOpacity
-            key={diary.id}
-            onPress={() => {
-              setSelectedDiary(diary);
-              setDate(diary.date);
-              setTitle(diary.title);
-              setRating(diary.rating);
-              setHowDayWent(diary.howDayWent);
-              setWhatIDidToday(diary.whatIDidToday);
-              setOthers(diary.others);
-              setEditModalVisible(true);
-            }}
-            style={styles.diaryItem}>
-            <View>
-              <Text>{diary.date}</Text>
-              <Text>{diary.title}</Text>
-            </View>
-            <TouchableOpacity onPress={() => setEditModalVisible(true)} style={styles.editButton}>
-              <MaterialCommunityIcons name="pencil" size={24} color="blue" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => removeDiary(diary.id)}>
-              <MaterialCommunityIcons name="delete" size={24} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => viewDiary(diary)}>
-              <AntDesign name="eye" size={24} color="black" />
-            </TouchableOpacity>
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-      
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={editmodalVisible}
-        onRequestClose={() => setEditModalVisible(false)}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Edit Diary Entry</Text>
-            <TouchableOpacity onPress={showDatePicker}>
-              <Text style={styles.datePickerText}>{date ? date : 'Select Date'}</Text>
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirmDate}
-              onCancel={hideDatePicker}
-            />
-            <TextInput
-              style={styles.titleInput}
-              placeholder="Title"
-              value={title}
-              onChangeText={(text) => setTitle(text)}
-              maxLength={20}
-            />
-            <Text style={styles.label}>Rating of the Day</Text>
-            <Picker
-              selectedValue={rating}
-              style={{ height: 40, width: 200 }}
-              onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
-              <Picker.Item label="1 - Very Good" value={1} />
-              <Picker.Item label="2 - Good " value={2} />
-              <Picker.Item label="3 - Okay" value={3} />
-              <Picker.Item label="4 - Bad" value={4} />
-              <Picker.Item label="5 - Very Bad" value={5} />
-            </Picker>
-            <TextInput
-              style={styles.bigInput}
-              placeholder="How the day went by?"
-              value={howDayWent}
-              onChangeText={(text) => setHowDayWent(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="What I did today?"
-              value={whatIDidToday}
-              onChangeText={(text) => setWhatIDidToday(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="Others"
-              value={others}
-              onChangeText={(text) => setOthers(text)}
-            />
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setEditModalVisible(false)}>
-                <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.submitButton]}
-                onPress={editDiary}>
-                <Text style={styles.buttonText}>Apply Changes</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <Text style={styles.task}>{mondayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Monday', mondayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
         </View>
-      </Modal>
-      
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Add Diary Entry</Text>
-            <TouchableOpacity onPress={showDatePicker}>
-              <Text style={styles.datePickerText}>{date ? date : 'Select Date'}</Text>
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirmDate}
-              onCancel={hideDatePicker}
-            />
-            <TextInput
-              style={styles.titleInput}
-              placeholder="Title"
-              value={title}
-              onChangeText={(text) => setTitle(text)}
-              maxLength={20}
-            />
-            <Text style={styles.label}>Rating of the Day</Text>
-            <Picker
-              selectedValue={rating}
-              style={{ height: 40, width: 200 }}
-              onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
-              <Picker.Item label="1 - Very Good" value={1} />
-              <Picker.Item label="2 - Good " value={2} />
-              <Picker.Item label="3 - Okay" value={3} />
-              <Picker.Item label="4 - Bad" value={4} />
-              <Picker.Item label="5 - Very Bad" value={5} />
-            </Picker>
-            <TextInput
-              style={styles.bigInput}
-              placeholder="How the day went by?"
-              value={howDayWent}
-              onChangeText={(text) => setHowDayWent(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="What I did today?"
-              value={whatIDidToday}
-              onChangeText={(text) => setWhatIDidToday(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="Others"
-              value={others}
-              onChangeText={(text) => setOthers(text)}
-            />
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}>
-                <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.submitButton]}
-                onPress={addDiary}>
-                <Text style={styles.buttonText}>Submit</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+        {/* Repeat the same structure for other days */}
+        {/* Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday */}
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Tuesday</Text>
+          <TouchableOpacity
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.task}>{tuesdayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Tuesday', tuesdayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
         </View>
-      </Modal>
-      
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => {
-          setModalVisible(true);
-          setSelectedDiary(null);
-          resetInputs();
-        }}>
-        <MaterialCommunityIcons name="plus" size={24} color="white" />
-      </TouchableOpacity>
-      
-      <View style={styles.navButtonsContainer}>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
-        </TouchableOpacity>
-
-        {showSettingsButton && (
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-          <AntDesign name="setting" size={30} color="black" />
-        </TouchableOpacity>
-      )}
+        {/* Wednesday */}
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Wednesday</Text>
+          <TouchableOpacity
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.task}>{wednesdayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Wednesday', wednesdayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
+        </View>
+        {/* Thursday */}
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Thursday</Text>
+          <TouchableOpacity
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.task}>{thursdayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Thursday', thursdayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
+        </View>
+        {/* Friday */}
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Friday</Text>
+          <TouchableOpacity
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.task}>{fridayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Friday', fridayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
+        </View>
+        {/* Saturday */}
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Saturday</Text>
+          <TouchableOpacity
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.task}>{saturdayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Saturday', saturdayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
+        </View>
+        {/* Sunday */}
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayLabel}>Sunday</Text>
+          <TouchableOpacity
+            style={[styles.button, { borderColor: '#FF5733' }]}
+            onPress={() => navigateToScreen('Plan')}>
+            <FontAwesome name="pencil-square-o" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.task}>{sundayTask}</Text>
+          <TouchableOpacity
+            onPress={() => saveTask('Sunday', sundayTask)}
+            style={styles.applyButton}>
+            <Text style={styles.applyText}>Apply Changes</Text>
+          </TouchableOpacity>
+        </View>
+        {/* Buttons for Plan, Act, Reflect */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigateToScreen('Plan')}>
+            <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigateToScreen('Act')}>
+            <MaterialCommunityIcons name="book-open" size={40} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigateToScreen('Reflect')}>
+            <MaterialCommunityIcons name="chart-line" size={40} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'space-between',
+    flexGrow: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f0f0f0',
+    paddingVertical: 20,
+    backgroundColor: '#f0f0f0', // Background color for the entire screen
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 10, 
-  },
-  diariesContainer: {
+  content: {
     flex: 1,
-    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
-  diaryItem: {
+  dayContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-  },
-  settingsButton: {
-    position: 'absolute',
-    top: -620,
-    right: 20,
-  },
-  addButton: {
-    position: 'absolute',
-    bottom: 100,
-    right: 20,
-    backgroundColor: 'blue',
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalView: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    elevation: 5,
-  },
-  modalHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 20,
   },
-  datePickerText: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    width: '100%',
-    textAlign: 'center',
+  dayLabel: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginRight: 10,
   },
-  titleInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 5,
-    width: '100%',
-  },
-  label: {
-    alignSelf: 'flex-start',
-    marginLeft: 10,
-    marginBottom: 0,
-  },
-  ratingPicker: {
-    height: 50,
-    width: '100%',
-    marginBottom: 10,
-  },
-  bigInput: {
-    borderWidth: 2,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-    width: 300,
-    height: 100,
-    textAlignVertical: 'top',
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginTop: 20,
+  task: {
+    fontSize: 16,
+    marginRight: 10,
   },
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderWidth: 1,
     borderRadius: 5,
-    paddingVertical: 10,
-    width: '45%',
-
+    padding: 5,
   },
-  cancelButton: {
-    backgroundColor: 'red',
-  },
-  submitButton: {
-    backgroundColor: 'green',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  navButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingBottom: 10,
+  applyButton: {
     backgroundColor: '#007bff',
-    borderRadius: 10,
-    paddingVertical: 10, 
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
-  navButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 35,
+  applyText: {
+    color: 'white',
   },
-  editButton: {
-    marginRight: 10,
-  },  
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'center', // Center the buttons horizontally
+    width: '100%',
+    paddingHorizontal: 20, // Adjust as needed
+    paddingBottom: 10,
+    paddingVertical: 10,
+    backgroundColor: '#007bff', // Change to desired color
+    borderRadius: 10, // Add border radius for a rounded look
+  },
 });
 
-
-
-export default ReflectScreen;
+export default TaskPrioritization;
