@@ -34,12 +34,19 @@ const ReflectScreen = ({ navigation }) => {
   const fetchDiaries = () => {
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * FROM diary',
+        'SELECT * FROM diary ORDER BY date DESC', // Sort by date in descending order
         [],
-        (_, { rows: { _array } }) => setDiaries(_array)
+        (_, { rows: { _array } }) => {
+          // Sort the diary entries in ascending order by date
+          const sortedDiaries = _array.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          });
+          setDiaries(sortedDiaries);
+        }
       );
     });
   };
+  
 
   const addDiary = () => {
     if (!date || !title || !rating) {
@@ -76,7 +83,7 @@ const ReflectScreen = ({ navigation }) => {
           fetchDiaries();
           setEditModalVisible(false);
           setSelectedDiary(null);
-          resetInputs();
+         
         }
       );
     });
@@ -133,7 +140,13 @@ const ReflectScreen = ({ navigation }) => {
       <ScrollView style={styles.diariesContainer}>
         {diaries.map(diary => (
           <TouchableOpacity
-            key={diary.id}
+            
+            style={styles.diaryItem}>
+            <View>
+              <Text>{diary.date}</Text>
+              <Text>{diary.title}</Text>
+            </View>
+            <TouchableOpacity key={diary.id}
             onPress={() => {
               setSelectedDiary(diary);
               setDate(diary.date);
@@ -143,13 +156,7 @@ const ReflectScreen = ({ navigation }) => {
               setWhatIDidToday(diary.whatIDidToday);
               setOthers(diary.others);
               setEditModalVisible(true);
-            }}
-            style={styles.diaryItem}>
-            <View>
-              <Text>{diary.date}</Text>
-              <Text>{diary.title}</Text>
-            </View>
-            <TouchableOpacity onPress={() => setEditModalVisible(true)} style={styles.editButton}>
+            }} style={styles.editButton}>
               <MaterialCommunityIcons name="pencil" size={24} color="blue" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => removeDiary(diary.id)}>
