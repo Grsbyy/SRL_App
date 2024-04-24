@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     right: 20,
   },
   bottomContainer: {
-    flex: 1,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
+    borderRadius: 20,
   },
   bottomButton: {
     backgroundColor: '#fff',
