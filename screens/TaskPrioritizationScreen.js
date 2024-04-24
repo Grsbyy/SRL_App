@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TextInput, Platform, ScrollView, Keyboard } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TextInput, Platform, ScrollView, Modal } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TaskItem from './components/TaskItem';
+import AddTaskModal from './components/AddTaskModal';
 import * as SQLite from 'expo-sqlite';
 
 // Open or Create the SQLite Database
@@ -11,6 +12,7 @@ const TaskPrioritization = ({ navigation }) => {
 
   const [task, setTask] = useState('');
   const [taskItems, setTaskItems] = useState([]);
+  const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
 
   useEffect(() => {
     // Create tasks table if it doesn't exist
@@ -73,19 +75,21 @@ const TaskPrioritization = ({ navigation }) => {
         </ScrollView>
       </View>
 
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.writeTaskWrapper}>
-        <TextInput
-          style={styles.input}
-          placeholder={'Write a Task'}
-          value={task}
-          onChangeText={text => setTask(text)}
-        />
-        <TouchableOpacity onPress={handleAddTask}>
-          <View style={styles.addWrapper}>
+      <Modal
+        animationType='slide'
+        transparent={false}
+        visible={addTaskModalVisible}
+        onRequestClose={() => setAddTaskModalVisible(false)}>
+        <AddTaskModal></AddTaskModal>
+      </Modal>
+
+      <View style={styles.addTaskWrapper}>
+        <TouchableOpacity onPress={() => setAddTaskModalVisible(true)}>
+          <View style={styles.addTaskButton}>
             <Text style={styles.addText}>+</Text>
           </View>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -153,26 +157,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
-    width: 250,
+  addTaskWrapper:{
+    position: 'absolute',
+    bottom: 100,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
-  addWrapper: {
+  addTaskButton: {
     width: 60,
     height: 60,
-    backgroundColor: '#FFF',
+    backgroundColor: '#1CA7EC',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
   },
-  addText: {},
+  addText: {
+    color: 'white',
+  },
 
 });
 

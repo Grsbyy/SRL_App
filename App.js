@@ -12,6 +12,7 @@ import ASSurvey from './screens/ASSurvey';
 import GWACalcScreen from './screens/GWACalcScreen';
 import Homescreen from './screens/Homescreen';
 import Planner from './screens/PlannerScreen';
+import AddTaskScreen from './screens/AddTaskScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const App = () => {
         <Stack.Screen name="ASSurvey" component={ASSurvey} options={{ headerTitle: ' Survey' }}/>
         <Stack.Screen name="GWACalc" component={GWACalcScreen} options={{ headerTitle: 'GWA Calculator' }} />
         <Stack.Screen name="WPlanner" component={Planner} options={{ headerTitle: 'Weekly Planner' }} />
+        <Stack.Screen name="AddTask" component={AddTaskScreen} options={{ headerShown: null }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
