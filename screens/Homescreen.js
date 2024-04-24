@@ -35,7 +35,6 @@ const Homescreen = ({ navigation }) => {
   const generateRandomQuote = () => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     setRandomQuote(quotes[randomIndex]);
-    console.log(quotes[randomIndex]);
   };
 
   // Function to get a random gif
@@ -54,34 +53,38 @@ const Homescreen = ({ navigation }) => {
       <View style={styles.content}>
         <Text style={styles.greeting}>Hello User</Text>
         <Text style={styles.quote}>{randomQuote}</Text>
+    
+      </View>
+
+        <Image
+          source={randomGif}
+          style={styles.gif}
+          resizeMode='contain'
+        />
+
+      <View style={styles.explanationWrapper}>
+        <Text style={styles.explanationHeader}>What is Self-Regulated Learning?</Text>
         <Text style={styles.explanation}>
           Self-Regulated Learning is the process by which learners take control of their own learning process. 
           This involves setting goals, managing time effectively, monitoring progress, and adapting learning strategies based on feedback.
         </Text>
       </View>
 
-        <Image
-          // source={require('./Images/gifs/astronaut1.gif')}
-          source={randomGif}
-          style={styles.gif}
-          resizeMode='contain'
-        />
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
+          <MaterialCommunityIcons name="calendar-check" size={35} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
+          <MaterialCommunityIcons name="book-open" size={35} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
+          <MaterialCommunityIcons name="chart-line" size={35} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f0f0f0', // Background color for the entire screen
+    backgroundColor: '#8a5dfb', // Background color for the entire screen
   },
   content: {
     flex: 1,
@@ -106,39 +109,56 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 20,
+    color: '#fff',
   },
   quote: {
     fontSize: 18,
     fontStyle: 'italic',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#fff',
+  },
+  explanationWrapper: {
+    backgroundColor: '#fff',
+    borderRadius: 20, 
+    marginBottom: 10
+  },
+  explanationHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#292971',
+    textAlign: 'center',
+    marginTop: 20
   },
   explanation: {
     fontSize: 16,
     textAlign: 'justify',
-    marginBottom: 20,
+    margin: 20,
+    color: '#5C5D7E',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center', // Center the buttons horizontally
     width: '100%',
     paddingHorizontal: 20, // Adjust as needed
+    paddingLeft: 50,
+    paddingRight: 50,
     paddingBottom: 10,
     paddingVertical: 10,
-    backgroundColor: '#007bff', // Change to desired color
-    borderRadius: 10, // Add border radius for a rounded look
+
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 35, // Add spacing between buttons
+    marginHorizontal: 25, // Add spacing between buttons
   },
 
   gif: {
     flex: 1,
-    bottom: 50,
-    width: '80%',
-    height: '80%',
+    marginBottom: 50,
+    width: '100%',
+    height: '100%',
   }
 });
 
