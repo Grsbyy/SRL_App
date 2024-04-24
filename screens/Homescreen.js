@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import astronaut1 from './Images/gifs/astronaut1.gif';
+import astronaut2 from './Images/gifs/astronaut2.gif';
+import astronaut3 from './Images/gifs/astronaut3.gif';
 
 const Homescreen = ({ navigation }) => {
   const [quotes] = useState([
@@ -16,18 +19,30 @@ const Homescreen = ({ navigation }) => {
     "The harder you work for something, the greater you’ll feel when you achieve it.",
     "Dream bigger. Do bigger."
   ]);
+
+  const welcomeGifs = [astronaut1, astronaut2, astronaut3];
+
   const [randomQuote, setRandomQuote] = useState('');
+  const [randomGif, setRandomGif] = useState(''); 
 
   // Generate random quote on component mount
   useEffect(() => {
     generateRandomQuote();
+    generateRandomGif();
   }, []);
 
   // Function to generate random quote
   const generateRandomQuote = () => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     setRandomQuote(quotes[randomIndex]);
+    console.log(quotes[randomIndex]);
   };
+
+  // Function to get a random gif
+  const generateRandomGif = () => {
+    const gifIndex = Math.floor(Math.random() * welcomeGifs.length);
+    setRandomGif(welcomeGifs[gifIndex])
+  }
 
   // Function to navigate to respective screens
   const navigateToScreen = (screenName) => {
@@ -44,6 +59,13 @@ const Homescreen = ({ navigation }) => {
           This involves setting goals, managing time effectively, monitoring progress, and adapting learning strategies based on feedback.
         </Text>
       </View>
+
+        <Image
+          // source={require('./Images/gifs/astronaut1.gif')}
+          source={randomGif}
+          style={styles.gif}
+          resizeMode='contain'
+        />
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -111,6 +133,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 35, // Add spacing between buttons
   },
+
+  gif: {
+    flex: 1,
+    bottom: 50,
+    width: '80%',
+    height: '80%',
+  }
 });
 
 export default Homescreen;
