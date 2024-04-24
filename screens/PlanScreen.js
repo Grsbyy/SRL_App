@@ -40,19 +40,19 @@ const PlanScreen = ({ navigation }) => {
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-        <AntDesign name="setting" size={30} color="black" />
+        <AntDesign name="setting" size={30} color="white" paddingRight={10} paddingTop={10} />
       </TouchableOpacity>
 
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
+          <MaterialCommunityIcons name="calendar-check" size={40} color="#7455F7" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
+          <MaterialCommunityIcons name="book-open" size={40} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
+          <MaterialCommunityIcons name="chart-line" size={40} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
     </View>
@@ -64,22 +64,32 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: '#F8F6FF'
   },
   header: {
+    width: '100%',
     alignItems: 'center',
+    borderRadius: 20,
+    paddingBottom: 10,
     marginBottom: 20,
+    backgroundColor: '#7455F7',
+    paddingLeft: 20, 
+    paddingRight: 20,
+    marginTop: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 0,
     marginTop: 20,
+    color: 'white',
   },
   explanation: {
     fontSize: 16,
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'justify',
+    color: 'white',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -90,15 +100,16 @@ const styles = StyleSheet.create({
     
   },
   button: {
-    backgroundColor: '#007bff',
-    borderRadius: 10,
+    backgroundColor: '#fff',
+    borderRadius: 20,
     padding: 20,
     marginVertical: 10,
     alignItems: 'center',
     width: '90%',
+    elevation: 5,
   },
   buttonText: {
-    color: 'white',
+    color: '#414141',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -107,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonExplanation: {
-    color: 'white',
+    color: '#999999',
     fontSize: 14,
     textAlign: 'center',
   },
@@ -117,19 +128,20 @@ const styles = StyleSheet.create({
     right: 20,
   },
   bottomContainer: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#007bff',
+    backgroundColor: '#fff',
     paddingVertical: 5,
-    borderRadius: 10,
     position: 'absolute',
     bottom: 20,
     left: 20,
     right: 20,
+    borderRadius: 20,
   },
   bottomButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#fff',
     borderRadius: 5,
     padding: 5,
     alignItems: 'center',

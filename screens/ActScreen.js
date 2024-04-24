@@ -72,13 +72,13 @@ const PlanScreen = ({ navigation }) => {
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
+          <MaterialCommunityIcons name="calendar-check" size={40} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
+          <MaterialCommunityIcons name="book-open" size={40} color="#7455F7" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
+          <MaterialCommunityIcons name="chart-line" size={40} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
 
@@ -122,12 +122,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#7455F7',
     borderRadius: 10,
     padding: 20,
     marginVertical: 10,
     alignItems: 'center',
     width: '90%',
+    elevation: 5,
   },
   buttonText: {
     color: 'white',
@@ -150,19 +151,20 @@ const styles = StyleSheet.create({
     right: 20,
   },
   bottomContainer: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#007bff',
+    backgroundColor: '#fff',
     paddingVertical: 5,
-    borderRadius: 10,
     position: 'absolute',
     bottom: 20,
     left: 20,
     right: 20,
+    borderRadius: 20,
   },
   bottomButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#fff',
     borderRadius: 5,
     padding: 5,
     alignItems: 'center',

@@ -321,17 +321,17 @@ const ReflectScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
+          <MaterialCommunityIcons name="calendar-check" size={40} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
+          <MaterialCommunityIcons name="book-open" size={40} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
+          <MaterialCommunityIcons name="chart-line" size={40} color="#7455F7" />
         </TouchableOpacity>
 
         {showSettingsButton && (
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 100,
     right: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#7455F7',
     borderRadius: 30,
     width: 60,
     height: 60,
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     paddingBottom: 10,
-    backgroundColor: '#007bff',
+    backgroundColor: '#fff',
     borderRadius: 10,
     paddingVertical: 10, 
   },
