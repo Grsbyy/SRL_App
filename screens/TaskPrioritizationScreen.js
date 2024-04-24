@@ -31,7 +31,7 @@ const TaskPrioritization = ({ navigation }) => {
   useEffect(() => {
     db.transaction(tx => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, givenDate TEXT, dueDate TEXT, title TEXT, rating INTEGER, desc TEXT, subj TEXT, len TEXT, completed INTEGER DEFAULT 1);'
+        'CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, givenDate TEXT, dueDate TEXT, title TEXT, rating INTEGER, desc TEXT, subj TEXT, len INTEGER, completed INTEGER DEFAULT 1);'
       );
     });
     fetchTasks();
@@ -181,6 +181,7 @@ const TaskPrioritization = ({ navigation }) => {
         <ScrollView style={[styles.diariesContainer, , { paddingBottom: 100 }]}>
         {tasks.map(task => (
           <TouchableOpacity
+            key={task.id}
             style={styles.diaryItem}>
             <View>
               {new Date(task.dueDate) - new Date() < 0 && <Text>Task is due</Text>}
@@ -479,7 +480,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 100,
     right: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#7844fa',
     borderRadius: 30,
     width: 60,
     height: 60,
@@ -571,7 +572,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     paddingBottom: 10,
-    backgroundColor: '#007bff',
+    backgroundColor: '#8a5dfb',
     borderRadius: 10,
     paddingVertical: 10, 
   },

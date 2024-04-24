@@ -67,15 +67,15 @@ const GoalSetting = ({ navigation }) => {
     );
   };
 
-  const toggleCompletion = (id) => {
-    setCompletedGoals((prevCompletedGoals) => {
-      if (prevCompletedGoals.includes(id)) {
-        return prevCompletedGoals.filter((goalId) => goalId !== id);
-      } else {
-        return [...prevCompletedGoals, id];
-      }
-    });
-  };
+    const toggleCompletion = (id) => {
+      setCompletedGoals((prevCompletedGoals) => {
+        if (prevCompletedGoals.includes(id)) {
+          return prevCompletedGoals.filter((goalId) => goalId !== id);
+        } else {
+          return [...prevCompletedGoals, id];
+        }
+      });
+    };
 
   const editGoal = (goal) => {
     setEditingGoal(goal);
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 100,
     right: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#8a5dfb',
     borderRadius: 50,
     width: 60,
     height: 60,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10,
     paddingVertical: 10,
-    backgroundColor: '#007bff',
+    backgroundColor: '#8a5dfb',
     borderRadius: 10,
   },
   button: {

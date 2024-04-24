@@ -34,10 +34,7 @@ const PlanScreen = ({ navigation }) => {
         <View style={styles.header}>
           <Text style={styles.title}>ACT</Text>
           <Text style={styles.explanation}>
-            The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
-            The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
-            The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
-            The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
+          The Act phase involves implementing academic strategies, tracking performance, and engaging in actions aimed at achieving learning goals. Students in this phase actively apply study techniques such as summarizing, organizing, and reviewing material. They monitor their progress by assessing their performance and adjusting strategies accordingly. This phase emphasizes the importance of taking proactive steps towards learning objectives, fostering autonomy and effectiveness in academic pursuits.
           </Text>
         </View>
 
@@ -46,25 +43,25 @@ const PlanScreen = ({ navigation }) => {
             style={[styles.button, styles.taskPrioritizationButton]}
             onPress={() => navigateToScreen('AcadStrat')}>
             <Text style={styles.buttonText}>Academic Strategies</Text>
-            <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
+            <Text style={styles.buttonExplanation}>mploying various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigateToScreen('ASSurvey')}>
             <Text style={styles.buttonText}>Know Suitable Academic Strategies For You</Text>
-            <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
+            <Text style={styles.buttonExplanation}>Assessing individual learning preferences and strengths to identify the most effective study techniques tailored to personal needs.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigateToScreen('GWACalc')}>
             <Text style={styles.buttonText}>GWA Calculator</Text>
-            <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
+            <Text style={styles.buttonExplanation}>Utilizing a tool to track and calculate General Weighted Average (GWA) based on grades earned in courses, providing insight into academic performance.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigateToScreen('AcadStrat')}>
             <Text style={styles.buttonText}>Other Study Techniques</Text>
-            <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
+            <Text style={styles.buttonExplanation}>Exploring additional methods such as Pomodor and Feynman Techniques to optimize retention and understanding of course material.</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -35,7 +35,7 @@ const PlanScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigateToScreen('WPlanner')}>
           <Text style={styles.buttonText}>Weekly Planner</Text>
-          <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
+          <Text style={styles.buttonExplanation}>Organizing tasks and assignments for each week to effectively manage time.</Text>
         </TouchableOpacity>
       </View>
 
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 100,
     width: 320, 
+    marginTop: 30, 
     
   },
   button: {
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   taskPrioritizationButton: {
-    marginBottom: 20,
+    marginBottom: 5,
   },
   buttonExplanation: {
     color: '#999999',

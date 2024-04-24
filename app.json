@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "SRL_App",
-    "slug": "SRL_App",
+    "name": "LearnBoost",
+    "slug": "LearnBoost",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon1.png",
         "backgroundColor": "#ffffff"
       }
     },

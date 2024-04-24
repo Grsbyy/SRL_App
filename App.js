@@ -13,6 +13,7 @@ import GWACalcScreen from './screens/GWACalcScreen';
 import Homescreen from './screens/Homescreen';
 import Planner from './screens/PlannerScreen';
 import AddTaskScreen from './screens/AddTaskScreen';
+import otherScreen from './screens/otherScreen'
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,7 @@ const App = () => {
         <Stack.Screen name="Home" component={Homescreen} options={{ headerShown: null }} />
         <Stack.Screen name="Plan" component={PlanScreen} options={{ headerShown: null }} />
         <Stack.Screen name="Act" component={ActScreen} options={{ headerShown: null }}/>
-        <Stack.Screen name="TaskPrioritization" component={TaskPrioritizationScreen} />
+        <Stack.Screen name="TaskPrioritization" component={TaskPrioritizationScreen} options={{ headerTitle: 'Task Prioritization' }}/>
         <Stack.Screen name="Reflect" component={ReflectScreen} options={{ headerShown: null }} />
         <Stack.Screen name="GoalSetting" component={GoalSettingScreen} options={{ headerTitle: 'Goal Setting' }}/>
         <Stack.Screen name="AcadStrat" component={AcadStratScreen} options={{ headerTitle: 'Academic Strategies' }} />
@@ -31,6 +32,7 @@ const App = () => {
         <Stack.Screen name="GWACalc" component={GWACalcScreen} options={{ headerTitle: 'GWA Calculator' }} />
         <Stack.Screen name="WPlanner" component={Planner} options={{ headerTitle: 'Weekly Planner' }} />
         <Stack.Screen name="AddTask" component={AddTaskScreen} options={{ headerShown: null }}/>
+        <Stack.Screen name="Other" component={otherScreen} options={{ headerTitle: 'Other Strategies' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
