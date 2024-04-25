@@ -140,7 +140,7 @@ const ReflectScreen = ({ navigation }) => {
       <ScrollView style={styles.diariesContainer}>
         {diaries.map(diary => (
           <TouchableOpacity
-            
+            key={diary.id}
             style={styles.diaryItem}>
             <View>
               <Text>{diary.date}</Text>
