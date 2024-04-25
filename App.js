@@ -20,7 +20,17 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Main"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#8a5dfb', // Change header background color
+          },
+          headerTintColor: 'white', // Change header text font color
+          headerTitleStyle: {
+            fontWeight: 'bold', // You can also customize font family, size, etc.
+          },
+        }}
+        >
         <Stack.Screen name="Home" component={Homescreen} options={{ headerShown: null }} />
         <Stack.Screen name="Plan" component={PlanScreen} options={{ headerShown: null }} />
         <Stack.Screen name="Act" component={ActScreen} options={{ headerShown: null }}/>
