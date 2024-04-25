@@ -282,11 +282,11 @@ const TaskPrioritization = ({ navigation }) => {
               selectedValue={rating}
               style={{ height: 40, width: 200 }}
               onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
-              <Picker.Item label="1 - Very Good" value={1} />
-              <Picker.Item label="2 - Good " value={2} />
+              <Picker.Item label="1 - Very Easy" value={1} />
+              <Picker.Item label="2 - Easy " value={2} />
               <Picker.Item label="3 - Okay" value={3} />
-              <Picker.Item label="4 - Bad" value={4} />
-              <Picker.Item label="5 - Very Bad" value={5} />
+              <Picker.Item label="4 - Hard" value={4} />
+              <Picker.Item label="5 - Very Hard" value={5} />
             </Picker>
           
             <View style={styles.buttonsContainer}>
