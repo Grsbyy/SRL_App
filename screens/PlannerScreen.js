@@ -125,7 +125,7 @@ const WPlanner = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView style={styles.content}>
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Monday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Monday</Text>
           <TouchableOpacity onPress={() => openEditModal('Monday', mondayTask)}>
           <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -139,7 +139,7 @@ const WPlanner = ({ navigation }) => {
         </View>
 
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Tuesday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Tuesday</Text>
           <TouchableOpacity onPress={() => openEditModal('Tuesday', tuesdayTask)}>
             <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -153,7 +153,7 @@ const WPlanner = ({ navigation }) => {
         </View>
 
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Wednesday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Wednesday</Text>
           <TouchableOpacity onPress={() => openEditModal('Wednesday', wednesdayTask)}>
             <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -167,7 +167,7 @@ const WPlanner = ({ navigation }) => {
         </View>
 
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Thursday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Thursday</Text>
           <TouchableOpacity onPress={() => openEditModal('Thursday', thursdayTask)}>
             <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -181,7 +181,7 @@ const WPlanner = ({ navigation }) => {
         </View>
 
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Friday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Friday</Text>
           <TouchableOpacity onPress={() => openEditModal('Friday', fridayTask)}>
              <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -195,7 +195,7 @@ const WPlanner = ({ navigation }) => {
         </View>
 
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Saturday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Saturday</Text>
           <TouchableOpacity onPress={() => openEditModal('Saturday', saturdayTask)}>
             <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -209,7 +209,7 @@ const WPlanner = ({ navigation }) => {
         </View>
 
         <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#FF5733' }]}>Sunday</Text>
+          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Sunday</Text>
           <TouchableOpacity onPress={() => openEditModal('Sunday', sundayTask)}>
             <FontAwesome name="pencil-square-o" size={30} color="#008000" />
           </TouchableOpacity>
@@ -290,7 +290,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 20,
+    color: '#662bfa',
+    borderColor: '#662bfa',
   },
   dayLabel: {
     fontSize: 24,
@@ -300,8 +302,8 @@ const styles = StyleSheet.create({
   },
   taskInput: {
     borderWidth: 1,
-    borderColor: '#CCCCCC',
-    borderRadius: 5,
+    borderColor: '#ae8ffc',
+    borderRadius: 10,
     padding: 10,
     minHeight: 100,
     marginBottom: 10,

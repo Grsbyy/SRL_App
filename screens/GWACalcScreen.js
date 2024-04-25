@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   calculateButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#7844fa',
     padding: 10,
     borderRadius: 5,
   },
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#007bff',
+    backgroundColor: '#8a5dfb',
     borderRadius: 5,
     padding: 5,
   },

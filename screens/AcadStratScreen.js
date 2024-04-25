@@ -106,13 +106,13 @@ const AcadStrat = ({ navigation }) => {
         <Text style={styles.headerText}>Academic Strategies</Text>
         {!selectedStrategy && (
           <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <FontAwesome name="filter" size={24} color="black" />
+            <FontAwesome name="filter" size={24} color="#8a5dfb" />
           </TouchableOpacity>
         )}
       </View>
       <ScrollView style={styles.scrollContainer}>
         {selectedStrategy ? (
-          <IllnessDetails strategy={selectedStrategy} onClose={() => setSelectedStrategy(null)} />
+          <StratDetails strategy={selectedStrategy} onClose={() => setSelectedStrategy(null)} />
         ) : (
           <View style={styles.section}>
             <TextInput
@@ -197,7 +197,7 @@ const AcadStrat = ({ navigation }) => {
   );
 };
 
-const IllnessDetails = ({ strategy, onClose }) => {
+const StratDetails = ({ strategy, onClose }) => {
   return (
     <View style={styles.section}>
       <Text style={styles.sectionHeader}>Strategy Details</Text>
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10,
     paddingVertical: 10,
-    backgroundColor: '#007bff',
+    backgroundColor: '#8a5dfb',
     borderRadius: 10,
   },
   button: {

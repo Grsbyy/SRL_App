@@ -247,10 +247,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedOption: { // Style for selected option
-    backgroundColor: '#007bff',
+    backgroundColor: '#9c76fc',
   },
   submitButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#7844fa',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   bottomButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: '#007bff', // Blue background for all buttons
+    backgroundColor: '#8a5dfb', // Blue background for all buttons
     paddingBottom: 10, // Extra space below buttons
     
   
