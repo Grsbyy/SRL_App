@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, // Adjust as needed
     paddingBottom: 10,
     paddingVertical: 10,
-    backgroundColor: '#007bff', // Change to desired color
+    backgroundColor: '#8a5dfb', // Change to desired color
     borderRadius: 10, // Add border radius for a rounded look
   },
   button: {

@@ -59,7 +59,7 @@ const PlanScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigateToScreen('AcadStrat')}>
+            onPress={() => navigateToScreen('Other')}>
             <Text style={styles.buttonText}>Other Study Techniques</Text>
             <Text style={styles.buttonExplanation}>Exploring additional methods such as Pomodor and Feynman Techniques to optimize retention and understanding of course material.</Text>
           </TouchableOpacity>

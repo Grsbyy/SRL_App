@@ -22,7 +22,7 @@ const GWACalc = ({ navigation }) => {
       'AdTech': 1.0,
     },
     'Grade 8': {
-      'Integrated Science': 1.0,
+      'Integrated Science 2': 1.0,
       'Mathematics': 1.0,
       'Computer Science': 1.0,
       'English': 1.0,
@@ -37,7 +37,7 @@ const GWACalc = ({ navigation }) => {
       'Biology': 1.0,
       'Chemistry': 1.0,
       'Physics': 1.0,
-      'Mathematics': 1.0,
+      'Mathematics 3': 1.0,
       'English': 1.0,
       'Filipino': 1.0,
       'Social Science': 1.0,
@@ -49,21 +49,20 @@ const GWACalc = ({ navigation }) => {
       'Biology': 1.0,
       'Chemistry': 1.0,
       'Physics': 1.0,
-      'Mathematics': 1.0,
-      'English': 1.0,
+      'Mathematics 4': 1.0,
+      'English 4': 1.0,
       'Filipino': 1.0,
       'Social Science': 1.0,
       'Computer Science': 1.0,
-      'Statistics': 1.0,
       'PEHM': 1.0,
       'Research': 1.0,
     },
     'PSHS SYP': {
-      'Research': 1.0,
+      'Research SYP': 2.0,
       'Core Subject': 1.0,
       'Elective': 1.0,
-      'Mathematics': 1.0,
-      'English': 1.0,
+      'Mathematics SYP': 1.0,
+      'English SYP': 1.0,
       'Filipino': 1.0,
       'Social Science': 1.0,
     },
@@ -102,9 +101,16 @@ const GWACalc = ({ navigation }) => {
   const getSubjectUnits = (subject) => {
     const unitsMap = {
       'Integrated Science': 1.7,
+      'Integrated Science 2': 2, 
       'Mathematics': 1.7,
+      'Mathematics 3': 1.0, 
+      'Mathematics 4': 1.3, 
+      'Mathematics SYP':1.0, 
       'Computer Science': 1.0,
       'English': 1.3,
+      'English 3': 1.0,
+      'English 4': 1.0, 
+      'English SYP': 1.0,
       'Filipino': 1.0,
       'Social Science': 1.0,
       'PEHM': 1.0,
@@ -116,6 +122,7 @@ const GWACalc = ({ navigation }) => {
       'Physics': 1.0,
       'Statistics': 1.0,
       'Research': 1.0,
+      'Research SYP': 2.0, 
       'Core Subject': 1.7,
       'Elective': 1.7,
     };
@@ -136,7 +143,8 @@ const GWACalc = ({ navigation }) => {
       </View>
       {Object.entries(grades[selectedGrade]).map(([subject, grade], index) => (
         <View key={index} style={styles.subjectContainer}>
-          <Text style={styles.subjectLabel}>{subject} ({getSubjectUnits(subject)} Units)</Text>
+          <Text style={styles.subjectLabel}>{subject}</Text>
+          <Text style={styles.subjectLabel}>({getSubjectUnits(subject)} Units)</Text>
           <Picker
             style={styles.gradeInput}
             selectedValue={grade}

@@ -176,7 +176,7 @@
     button: {
       alignItems: 'center',
       justifyContent: 'center',
-      marginHorizontal: 25, // Add spacing between buttons
+      marginHorizontal: 35, // Add spacing between buttons
     },
 
     gif: {
