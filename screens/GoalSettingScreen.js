@@ -88,7 +88,7 @@ const GoalSetting = ({ navigation }) => {
     return goals.map((goal) => (
       <View key={goal.id} style={styles.goalItem}>
         <TouchableOpacity onPress={() => removeGoal(goal.id)}>
-          <MaterialCommunityIcons name="close" size={24} color="red" style={styles.icon} />
+          <MaterialCommunityIcons name="close" size={24} color="#DF3E6E" style={styles.icon} />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }} onPress={() => editGoal(goal)}>
           <Text style={[styles.goalText, completedGoals.includes(goal.id) && styles.completedGoal]}>
@@ -96,16 +96,16 @@ const GoalSetting = ({ navigation }) => {
           </Text>
           <Text style={styles.goalType}>{goal.type}</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => editGoal(goal)}>
+          <AntDesign name="edit" size={24} color="grey" style={styles.icon} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => toggleCompletion(goal.id)}>
           <MaterialCommunityIcons
             name={completedGoals.includes(goal.id) ? 'checkbox-marked' : 'checkbox-blank-outline'}
             size={24}
-            color={completedGoals.includes(goal.id) ? 'green' : 'black'}
+            color={completedGoals.includes(goal.id) ? '#7455F7' : '#7455F7'}
             style={styles.icon}
           />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => editGoal(goal)}>
-          <AntDesign name="edit" size={24} color="blue" style={styles.icon} />
         </TouchableOpacity>
       </View>
     ));
@@ -155,10 +155,10 @@ const GoalSetting = ({ navigation }) => {
               <Picker.Item label="Other" value="Other" />
             </Picker>
             <View style={styles.modalButtonContainer}>
-              <TouchableOpacity style={styles.modalButton} onPress={addGoal}>
+              <TouchableOpacity style={styles.modalButtonAdd} onPress={addGoal}>
                 <Text style={styles.modalButtonText}>{editingGoal ? 'Edit Goal' : 'Add Goal'}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
+              <TouchableOpacity style={styles.modalButtonCancel} onPress={() => setModalVisible(false)}>
                 <Text style={styles.modalButtonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -269,8 +269,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '80%',
   },
-  modalButton: {
-    backgroundColor: '#007bff',
+  modalButtonAdd: {
+    backgroundColor: '#7455F7',
+    padding: 10,
+    borderRadius: 5,
+  },
+  modalButtonCancel: {
+    backgroundColor: '#9D9D9D',
     padding: 10,
     borderRadius: 5,
   },
@@ -301,7 +306,7 @@ const styles = StyleSheet.create({
   },
   completedGoal: {
     textDecorationLine: 'line-through',
-    color: 'green', // Change color of completed goal text
+    color: '#7455F7', // Change color of completed goal text
     fontWeight: 'bold',
   },
   doneLabel: {

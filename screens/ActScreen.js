@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const PlanScreen = ({ navigation }) => {
@@ -34,7 +34,9 @@ const PlanScreen = ({ navigation }) => {
         <View style={styles.header}>
           <Text style={styles.title}>ACT</Text>
           <Text style={styles.explanation}>
-          The Act phase involves implementing academic strategies, tracking performance, and engaging in actions aimed at achieving learning goals. Students in this phase actively apply study techniques such as summarizing, organizing, and reviewing material. They monitor their progress by assessing their performance and adjusting strategies accordingly. This phase emphasizes the importance of taking proactive steps towards learning objectives, fostering autonomy and effectiveness in academic pursuits.
+          The Act phase involves implementing academic strategies, tracking performance, and engaging in actions aimed at achieving learning goals.{"\n"}
+          Students in this phase actively apply study techniques such as summarizing, organizing, and reviewing material. They monitor their progress by assessing their performance and adjusting strategies accordingly. {"\n"}
+          This phase emphasizes the importance of taking proactive steps towards learning objectives, fostering autonomy and effectiveness in academic pursuits.
           </Text>
         </View>
 
@@ -81,7 +83,7 @@ const PlanScreen = ({ navigation }) => {
 
       {showSettingsButton && (
         <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-          <AntDesign name="setting" size={30} color="black" />
+          <Entypo name="home" size={25} color="grey" />
         </TouchableOpacity>
       )}
     </View>
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20,
     textAlign: 'center',
+    color: '#7455F7'
   },
   explanation: {
     fontSize: 16,

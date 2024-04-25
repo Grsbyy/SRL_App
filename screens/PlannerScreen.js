@@ -127,7 +127,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Monday</Text>
           <TouchableOpacity onPress={() => openEditModal('Monday', mondayTask)}>
-          <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+          <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -141,7 +141,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Tuesday</Text>
           <TouchableOpacity onPress={() => openEditModal('Tuesday', tuesdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -155,7 +155,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Wednesday</Text>
           <TouchableOpacity onPress={() => openEditModal('Wednesday', wednesdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -169,7 +169,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Thursday</Text>
           <TouchableOpacity onPress={() => openEditModal('Thursday', thursdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -183,7 +183,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Friday</Text>
           <TouchableOpacity onPress={() => openEditModal('Friday', fridayTask)}>
-             <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+             <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -197,7 +197,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Saturday</Text>
           <TouchableOpacity onPress={() => openEditModal('Saturday', saturdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -211,7 +211,7 @@ const WPlanner = ({ navigation }) => {
         <View style={styles.dayContainer}>
           <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Sunday</Text>
           <TouchableOpacity onPress={() => openEditModal('Sunday', sundayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#008000" />
+            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
           </TouchableOpacity>
           <TextInput
             style={styles.taskInput}
@@ -289,20 +289,22 @@ const styles = StyleSheet.create({
   dayContainer: {
     marginBottom: 20,
     padding: 10,
-    borderWidth: 1,
     borderRadius: 20,
     color: '#662bfa',
-    borderColor: '#662bfa',
+    backgroundColor: '#fff',
+    elevation: 5,
+
   },
   dayLabel: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
+    color: '#50448E'
   },
   taskInput: {
     borderWidth: 1,
-    borderColor: '#ae8ffc',
+    borderColor: '#C4C1CD',
     borderRadius: 10,
     padding: 10,
     minHeight: 100,
@@ -318,7 +320,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     padding: 20,
     borderRadius: 10,
-    elevation: 5,
     width: '80%',
   },
   modalDay: {

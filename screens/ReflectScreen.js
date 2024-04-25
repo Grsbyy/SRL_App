@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, ScrollView,
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('diary.db');
@@ -136,13 +136,18 @@ const ReflectScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>REFLECT</Text>
+      {showSettingsButton && (
+          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
+            <Entypo name="home" size={25} color="grey" />
+          </TouchableOpacity>
+        )}
       
       <ScrollView style={styles.diariesContainer}>
         {diaries.map(diary => (
           <TouchableOpacity
             key={diary.id}
             style={styles.diaryItem}>
-            <View>
+            <View style={{width:'60%'}}>
               <Text>{diary.date}</Text>
               <Text>{diary.title}</Text>
             </View>
@@ -157,14 +162,14 @@ const ReflectScreen = ({ navigation }) => {
               setOthers(diary.others);
               setEditModalVisible(true);
             }} style={styles.editButton}>
-              <MaterialCommunityIcons name="pencil" size={24} color="blue" />
+              <MaterialCommunityIcons name="pencil" size={24} color="grey" />
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight:10}} onPress={() => viewDiary(diary)}>
+              <AntDesign name="eye" size={24} color="grey" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => removeDiary(diary.id)}>
-              <MaterialCommunityIcons name="delete" size={24} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => viewDiary(diary)}>
-              <AntDesign name="eye" size={24} color="black" />
-            </TouchableOpacity>
+              <MaterialCommunityIcons name="delete" size={24} color="#DF3E6E" />
+            </TouchableOpacity>    
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -226,7 +231,7 @@ const ReflectScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={() => setEditModalVisible(false)}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <Text style={[styles.buttonText, {color:'#7455F7'}]}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.submitButton]}
@@ -295,12 +300,12 @@ const ReflectScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={() => setModalVisible(false)}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <Text style={[{color:'#7455F7', fontWeight:'bold'}]}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.submitButton]}
                 onPress={addDiary}>
-                <Text style={styles.buttonText}>Submit</Text>
+                <Text style={[{color:'white', fontWeight:'bold'}]}>Submit</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -333,12 +338,6 @@ const ReflectScreen = ({ navigation }) => {
           onPress={() => navigateToScreen('Reflect')}>
           <MaterialCommunityIcons name="chart-line" size={40} color="#7455F7" />
         </TouchableOpacity>
-
-        {showSettingsButton && (
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-          <AntDesign name="setting" size={30} color="black" />
-        </TouchableOpacity>
-      )}
       </View>
     </View>
   );
@@ -350,6 +349,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
+    paddingTop: 50,
     backgroundColor: '#f0f0f0',
   },
   header: {
@@ -357,6 +357,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 10, 
+    color: '#7455F7',
   },
   diariesContainer: {
     flex: 1,
@@ -372,7 +373,7 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     position: 'absolute',
-    top: -620,
+    marginTop: 40,
     right: 20,
   },
   addButton: {
@@ -403,6 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#7455F7'
   },
   datePickerText: {
     borderWidth: 1,
@@ -456,10 +458,11 @@ const styles = StyleSheet.create({
 
   },
   cancelButton: {
-    backgroundColor: 'red',
+    borderWidth: 2,
+    borderColor: '#7455F7'
   },
   submitButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#7455F7',
   },
   buttonText: {
     color: 'white',

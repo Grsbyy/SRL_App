@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const PlanScreen = ({ navigation }) => {
@@ -40,7 +40,7 @@ const PlanScreen = ({ navigation }) => {
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-        <AntDesign name="setting" size={30} color="white" paddingRight={10} paddingTop={10} />
+        <Entypo name="home" size={25} color="white" paddingRight={10} paddingTop={10} />
       </TouchableOpacity>
 
       {/* Bottom buttons */}

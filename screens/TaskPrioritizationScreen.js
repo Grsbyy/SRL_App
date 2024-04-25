@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, ScrollView,
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('task.db');
@@ -202,19 +202,20 @@ const TaskPrioritization = ({ navigation }) => {
               setEditModalVisible(true);
             }} 
             style={styles.editButton}>
-              <MaterialCommunityIcons name="pencil" size={24} color="blue" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => removeTask(task.id)}>
-              <MaterialCommunityIcons name="delete" size={24} color="red" />
+              <MaterialCommunityIcons name="pencil" size={24} color="grey" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => viewTask(task)}>
-              <AntDesign name="eye" size={24} color="black" />
+              <AntDesign name="eye" size={24} color="grey" />
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => removeTask(task.id)}>
+              <MaterialCommunityIcons name="delete" size={24} color="#DF3E6E" />
+            </TouchableOpacity>
+            
             <TouchableOpacity onPress={() => toggleCompletion(task.id)}>
               <MaterialCommunityIcons
                 name={completedTask.includes(task.id) ? 'checkbox-marked' : 'checkbox-blank-outline'}
                 size={24}
-                color={completedTask.includes(task.id) ? 'green' : 'black'}
+                color={completedTask.includes(task.id) ? '#7455F7' : '#7455F7'}
                 style={styles.icon}
                 />
             </TouchableOpacity>
@@ -232,7 +233,7 @@ const TaskPrioritization = ({ navigation }) => {
           <View style={styles.modalView}>
             <Text style={styles.modalHeader}>Edit Task Entry</Text>
             <TouchableOpacity onPress={showGivenDatePicker}>
-              <Text style={styles.datePickerText}>{givenDate ? givenDate : 'Select Given Date'}</Text>
+              <Text style={styles.datePickerText}>{givenDate ? givenDate : 'Date Task is Given'}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isGivenDatePickerVisible}
@@ -241,7 +242,7 @@ const TaskPrioritization = ({ navigation }) => {
               onCancel={hideGivenDatePicker}
             />
             <TouchableOpacity onPress={showDueDatePicker}>
-              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Select Due Date'}</Text>
+              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Date Task is Due'}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDueDatePickerVisible}
@@ -271,7 +272,7 @@ const TaskPrioritization = ({ navigation }) => {
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Length in Hours"
+              placeholder="Estimated Task Length in Hours"
               value={len}
               onChangeText={setLen}
               keyboardType='numeric'
@@ -292,7 +293,7 @@ const TaskPrioritization = ({ navigation }) => {
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={() => setEditModalVisible(false)}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <Text style={styles.buttonTextCancel}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.submitButton]}
@@ -313,7 +314,7 @@ const TaskPrioritization = ({ navigation }) => {
           <View style={styles.modalView}>
             <Text style={styles.modalHeader}>Add Task Entry</Text>
             <TouchableOpacity onPress={showGivenDatePicker}>
-              <Text style={styles.datePickerText}>{givenDate ? givenDate : 'Select Given Date'}</Text>
+              <Text style={styles.datePickerText}>{givenDate ? givenDate : 'Date Task is Given'}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isGivenDatePickerVisible}
@@ -322,7 +323,7 @@ const TaskPrioritization = ({ navigation }) => {
               onCancel={hideGivenDatePicker}
             />
             <TouchableOpacity onPress={showDueDatePicker}>
-              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Select Due Date'}</Text>
+              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Date Task is Due'}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDueDatePickerVisible}
@@ -373,7 +374,7 @@ const TaskPrioritization = ({ navigation }) => {
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={() => setModalVisible(false)}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <Text style={styles.buttonTextCancel}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.submitButton]}
@@ -436,6 +437,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 10, 
+    color: '#7455F7',
   },
   diariesContainer: {
     flex: 1,
@@ -445,7 +447,7 @@ const styles = StyleSheet.create({
   },
   completedGoal: {
     textDecorationLine: 'line-through',
-    color: 'green', // Change color of completed goal text
+    color: '#7455F7', // Change color of completed goal text
     fontWeight: 'bold',
   },
   goalText: {
@@ -504,19 +506,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#7455F7',
   },
   datePickerText: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
+    borderColor: '#7455F7',
+    borderRadius: 15,
     padding: 10,
-    marginBottom: 30,
+    paddingHorizontal: 20,
+    marginBottom: 15,
     width: '100%',
     textAlign: 'center',
+    color: 'grey',
+    backgroundColor: '#F6F5FB'
   },
   titleInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    backgroundColor: '#F6F5FB',
     borderRadius: 5,
     padding: 10,
     marginBottom: 5,
@@ -557,13 +562,18 @@ const styles = StyleSheet.create({
 
   },
   cancelButton: {
-    backgroundColor: 'red',
+    borderWidth: 2,
+    borderColor: '#7455F7',
   },
   submitButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#7455F7',
   },
   buttonText: {
     color: 'white',
+    fontWeight: 'bold',
+  },
+  buttonTextCancel:{
+    color: '#7455F7',
     fontWeight: 'bold',
   },
   navButtonsContainer: {

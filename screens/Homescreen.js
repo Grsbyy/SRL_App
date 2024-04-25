@@ -157,7 +157,7 @@
       marginTop: 20
     },
     explanation: {
-      fontSize: 16,
+      fontSize: 14,
       textAlign: 'justify',
       margin: 20,
       color: '#5C5D7E',
