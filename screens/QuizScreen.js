@@ -175,7 +175,7 @@ const QuizPrio = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>YOUR TASKS</Text>
+      <Text style={styles.header}>YOUR QUIZZES</Text>
       
       <View style={styles.tasksContainer}>
         <ScrollView style={[styles.diariesContainer, , { paddingBottom: 100 }]}>
@@ -231,9 +231,9 @@ const QuizPrio = ({ navigation }) => {
         onRequestClose={() => setEditModalVisible(false)}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Edit Task Entry</Text>
+            <Text style={styles.modalHeader}>Edit Quiz Entry</Text>
             <TouchableOpacity onPress={showDueDatePicker}>
-              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Date Task is Due'}</Text>
+              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Date of Quiz'}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDueDatePickerVisible}
@@ -243,25 +243,25 @@ const QuizPrio = ({ navigation }) => {
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Name"
+              placeholder="Quiz Name"
               value={title}
               onChangeText={(text) => setTitle(text)}
               maxLength={20}
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Description"
+              placeholder="Quiz Description"
               value={desc}
               onChangeText={(text) => setdesc(text)}
   
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Subject"
+              placeholder="Quiz Subject"
               value={subj}
               onChangeText={(text) => setsubj(text)}
             />
-            <Text style={styles.label}>Task Difficulty Rating</Text>
+            <Text style={styles.label}>Quiz Difficulty Rating</Text>
             <Picker
               selectedValue={rating}
               style={{ height: 40, width: 200 }}
@@ -296,9 +296,9 @@ const QuizPrio = ({ navigation }) => {
         onRequestClose={() => setModalVisible(false)}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Add Task Entry</Text>
+            <Text style={styles.modalHeader}>Add Quiz Entry</Text>
             <TouchableOpacity onPress={showDueDatePicker}>
-              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Date Task is Due'}</Text>
+              <Text style={styles.datePickerText}>{dueDate ? dueDate : 'Date of the Quiz'}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDueDatePickerVisible}
@@ -308,26 +308,26 @@ const QuizPrio = ({ navigation }) => {
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Name"
+              placeholder="Quiz Name"
               value={title}
               onChangeText={(text) => setTitle(text)}
               maxLength={20}
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Description"
+              placeholder="Quiz Description"
               value={desc}
               onChangeText={(text) => setdesc(text)}
   
             />
             <TextInput
               style={styles.titleInput}
-              placeholder="Task Subject"
+              placeholder="Quiz Subject"
               value={subj}
               onChangeText={(text) => setsubj(text)}
             />
         
-            <Text style={styles.label}>Task Difficulty Rating</Text>
+            <Text style={styles.label}>Quiz Difficulty Rating</Text>
             <Picker
               selectedValue={rating}
               style={{ height: 40, width: 200 }}
