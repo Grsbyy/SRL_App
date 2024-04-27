@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PlanScreen = ({ navigation }) => {
   // Function to navigate to respective screens
@@ -9,108 +9,131 @@ const PlanScreen = ({ navigation }) => {
     navigation.navigate(screenName);
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>PLAN</Text>
-        <Text style={styles.explanation}>
-          The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
-        </Text>
-      </View>
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  }
+
+  return (
+    <LinearGradient colors={['#373856', '#121327']} start={{x: 1, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
+      <View style={styles.header}>
+        <TouchableOpacity onPress={toggleCollapse}>
+          <Text style={styles.title}>Plan</Text>
+        </TouchableOpacity>
+        {!isCollapsed && (
+          <TouchableOpacity onPress={toggleCollapse}>
+            <Text style={styles.explanation}>
+              The Plan phase of Self-Regulated Learning involves setting goals, organizing tasks, and prioritizing activities to achieve desired outcomes.
+            </Text>
+          </TouchableOpacity>
+        )}     
+        
+      </View>
+      
       <View style={styles.buttonContainer}>
+
         <TouchableOpacity
           style={[styles.button, styles.taskPrioritizationButton]}
           onPress={() => navigateToScreen('TaskPrioritization')}>
-          <Text style={styles.buttonText}>Task Prioritization</Text>
+          <LinearGradient colors={['#633ef7', '#b63ef7']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.iconContainer}>
+            <FontAwesome5 name='tasks' size={25} color='#fff'></FontAwesome5>
+          </LinearGradient>
+          <Text style={[styles.buttonText, {color: '#52bfc7'}]}>Task Prioritization</Text>
           <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        
+        <TouchableOpacity 
           style={styles.button}
           onPress={() => navigateToScreen('GoalSetting')}>
-          <Text style={styles.buttonText}>Goal Setting</Text>
+          <LinearGradient colors={['#f071bb', '#e8647e']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.iconContainer}>
+            <FontAwesome5 name='trophy' size={25} color='#fff'></FontAwesome5>
+          </LinearGradient>
+          <Text style={[styles.buttonText, {color: '#db6385'}]} >Goal Setting</Text>
           <Text style={styles.buttonExplanation}>Set short-term and long-term goals to guide your learning journey.</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigateToScreen('WPlanner')}>
-          <Text style={styles.buttonText}>Weekly Planner</Text>
+          <LinearGradient colors={['#4868db', '#6de391']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.iconContainer}>
+            <FontAwesome5 name='calendar-week' size={25} color='#fff'></FontAwesome5>
+          </LinearGradient>
+          <Text style={[styles.buttonText, {color: '#5dba9e'}]}>Weekly Planner</Text>
           <Text style={styles.buttonExplanation}>Organizing tasks and assignments for each week to effectively manage time.</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-        <Entypo name="home" size={25} color="white" paddingRight={10} paddingTop={10} />
+        <Entypo name="home" size={20} color="rgba(255, 255, 255, 0.8)" paddingRight={10} paddingTop={10} />
       </TouchableOpacity>
 
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="#7455F7" />
+          <MaterialCommunityIcons name="calendar-month" size={30} color="#7455F7" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="#A9A9A9" />
+          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="#A9A9A9" />
+          <FontAwesome5 name="feather-alt" size={25} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    justifyContent: 'center',
+    alignItems: 'left',
     backgroundColor: '#F8F6FF'
   },
   header: {
-    width: '100%',
-    alignItems: 'center',
-    borderRadius: 20,
-    paddingBottom: 10,
-    marginBottom: 20,
-    backgroundColor: '#7455F7',
-    paddingLeft: 20, 
+    paddingLeft: 30, 
     paddingRight: 20,
-    marginTop: 20,
+    marginTop: 40
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 0,
-    marginTop: 20,
     color: 'white',
   },
   explanation: {
-    fontSize: 16,
+    fontSize: 15,
     marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'justify',
-    color: 'white',
+    textAlign: 'left',
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginBottom: -50
+
+  },
+  iconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -40
   },
   buttonContainer: {
-    alignItems: 'center',
-    flex: 1,
     justifyContent: 'center',
-    marginBottom: 100,
-    width: 320, 
-    marginTop: 30, 
-    
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: 40,
   },
   button: {
-    backgroundColor: '#fff',
+    marginTop: 30,
+    backgroundColor: '#353766',
     borderRadius: 20,
     padding: 20,
     marginVertical: 10,
     alignItems: 'center',
     width: '90%',
-    elevation: 5,
+
   },
   buttonText: {
-    color: '#414141',
+    paddingTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -119,7 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   buttonExplanation: {
-    color: '#999999',
+    color: 'rgba(255, 255, 255, 0.6)',
     fontSize: 14,
     textAlign: 'center',
   },
@@ -133,16 +156,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#373856',
     paddingVertical: 5,
     position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    borderRadius: 20,
+    bottom: 0,
+    height: 70,
+    paddingBottom: 20
   },
   bottomButton: {
-    backgroundColor: '#fff',
     borderRadius: 5,
     padding: 5,
     alignItems: 'center',

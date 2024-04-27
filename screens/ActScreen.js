@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated } from 'react-native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated, Modal } from 'react-native';
+import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PlanScreen = ({ navigation }) => {
   const [scrollY] = useState(new Animated.Value(0));
   const [showSettingsButton, setShowSettingsButton] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState('');
 
   useEffect(() => {
     const listenerId = scrollY.addListener(({ value }) => {
@@ -17,13 +21,25 @@ const PlanScreen = ({ navigation }) => {
     };
   }, []);
 
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  }
+
+  const toggleModal = (content) => {
+    setModalContent(content);
+    setModalVisible(!modalVisible);
+  }
+
   // Function to navigate to respective screens
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
   };
 
+
+
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['#373856', '#121327']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
+      
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         onScroll={Animated.event(
@@ -32,20 +48,27 @@ const PlanScreen = ({ navigation }) => {
         )}
         scrollEventThrottle={16}>
         <View style={styles.header}>
-          <Text style={styles.title}>ACT</Text>
-          <Text style={styles.explanation}>
-          The Act phase involves implementing academic strategies, tracking performance, and engaging in actions aimed at achieving learning goals.{"\n"}
-          Students in this phase actively apply study techniques such as summarizing, organizing, and reviewing material. They monitor their progress by assessing their performance and adjusting strategies accordingly. {"\n"}
-          This phase emphasizes the importance of taking proactive steps towards learning objectives, fostering autonomy and effectiveness in academic pursuits.
-          </Text>
+          <TouchableOpacity onPress={toggleCollapse}>
+            <Text style={styles.title}>ACT</Text>
+          </TouchableOpacity>
+          {!isCollapsed && (
+            <TouchableOpacity onPress={toggleCollapse}>
+              <Text style={styles.explanation}>
+                The Act phase involves implementing academic strategies, tracking performance, and engaging in actions aimed at achieving learning goals.{"\n"}
+                Students in this phase actively apply study techniques such as summarizing, organizing, and reviewing material. They monitor their progress by assessing their performance and adjusting strategies accordingly. {"\n"}
+                This phase emphasizes the importance of taking proactive steps towards learning objectives, fostering autonomy and effectiveness in academic pursuits.
+            </Text>
+            </TouchableOpacity>
+          )}
+          
         </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, styles.taskPrioritizationButton]}
-            onPress={() => navigateToScreen('AcadStrat')}>
+            onPress={() => toggleModal('Employing various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.')}>
             <Text style={styles.buttonText}>Academic Strategies</Text>
-            <Text style={styles.buttonExplanation}>mploying various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.</Text>
+            <Text style={styles.buttonExplanation}>Employing various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -68,16 +91,38 @@ const PlanScreen = ({ navigation }) => {
         </View>
       </ScrollView>
 
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={()=> setModalVisible(false)}
+        >
+
+        <View style={styles.modalContainer}>
+
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>{modalContent}</Text>
+            <TouchableOpacity onPress={()=> setModalVisible(false)}>
+              <View style={styles.closeModalButton}>
+                <Text style={{fontSize:18, color:'white'}}>Close</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+  
+      </Modal>
+
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="#A9A9A9" />
+          <MaterialCommunityIcons name="calendar-month" size={30} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="#7455F7" />
+          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#7455F7" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="#A9A9A9" />
+          <FontAwesome5 name="feather-alt" size={25} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
 
@@ -86,36 +131,32 @@ const PlanScreen = ({ navigation }) => {
           <Entypo name="home" size={25} color="grey" />
         </TouchableOpacity>
       )}
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    padding: -10,
-    paddingBottom: 100, // Add extra space at the bottom for scrolling
+    alignItems: 'left',
+    backgroundColor: '#F8F6FF'
   },
   header: {
-    marginBottom: 20,
+    paddingLeft: 30, 
+    paddingRight: 20,
+    marginTop: 40
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 20,
-    textAlign: 'center',
-    color: '#7455F7'
+    color: 'white',
   },
   explanation: {
-    fontSize: 16,
-    marginBottom: 10,
-    marginRight: 10,
-    textAlign: 'justify',
+    fontSize: 15,
+    marginTop: 10,
+    textAlign: 'left',
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginBottom: 10
   },
   buttonContainer: {
     alignItems: 'center',
@@ -145,6 +186,45 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
+  modalContainer:{
+    flex: 1,
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  },
+  modalContent: {
+    backgroundColor: '#24253a',
+    width: '100%',
+    position: 'absolute',
+    bottom: -20,
+    alignSelf: 'center',
+    borderRadius: 20,
+    elevation: 5,
+    paddingTop: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 200
+    
+  },
+  modalText:{
+    fontSize: 20,
+    marginTop: 40,
+    marginHorizontal: 20,
+    color: 'rgba(255, 255, 255, 0.7)'
+
+  },
+  closeModalButton: {
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: 'white',
+    alignSelf: 'flex-end',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 40,
+    marginRight: 20
+
+  },
   settingsButton: {
     position: 'absolute',
     top: 40,
@@ -155,16 +235,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#373856',
     paddingVertical: 5,
     position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    borderRadius: 20,
+    bottom: 0,
+    height: 70,
+    paddingBottom: 20
   },
   bottomButton: {
-    backgroundColor: '#fff',
     borderRadius: 5,
     padding: 5,
     alignItems: 'center',

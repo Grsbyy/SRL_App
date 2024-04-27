@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, ScrollView,
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('diary.db');
@@ -134,7 +135,7 @@ const ReflectScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['#373856', '#121327']} start={{x: 1, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
       <Text style={styles.header}>REFLECT</Text>
       {showSettingsButton && (
           <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
@@ -321,43 +322,35 @@ const ReflectScreen = ({ navigation }) => {
         }}>
         <MaterialCommunityIcons name="plus" size={24} color="white" />
       </TouchableOpacity>
-      
-      <View style={styles.navButtonsContainer}>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="#A9A9A9" />
+
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
+          <MaterialCommunityIcons name="calendar-month" size={30} color="#A9A9A9" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="#A9A9A9" />
+        <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
+          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#A9A9A9" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="#7455F7" />
+        <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
+          <FontAwesome5 name="feather-alt" size={25} color="#7455F7" />
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    paddingTop: 50,
-    backgroundColor: '#f0f0f0',
+    alignItems: 'left',
+    backgroundColor: '#F8F6FF'
   },
   header: {
+    paddingLeft: 30, 
+    paddingRight: 20,
+    marginTop: 40,
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 10, 
-    color: '#7455F7',
+    color: 'white',
   },
   diariesContainer: {
     flex: 1,
@@ -468,24 +461,27 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  navButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    paddingVertical: 10, 
-  },
-  navButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 35,
-  },
   editButton: {
     marginRight: 10,
   },  
+  bottomContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: '#373856',
+    paddingVertical: 5,
+    position: 'absolute',
+    bottom: 0,
+    height: 70,
+    paddingBottom: 20
+  },
+  bottomButton: {
+    borderRadius: 5,
+    padding: 5,
+    alignItems: 'center',
+    width: '30%',
+  },
 });
 
 
