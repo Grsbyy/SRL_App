@@ -42,13 +42,13 @@ const Plan = ({ navigation }) => {
           style={[styles.button, styles.taskPrioritizationButton]}
           onPress={() => navigateToScreen('TaskPrioritization')}>
           <Text style={styles.buttonText}>Task Prioritization</Text>
-          <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
+          <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and length.</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button]}
           onPress={() => navigateToScreen('QuizPrio')}>
           <Text style={styles.buttonText}>Quiz Prioritization</Text>
-          <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
+          <Text style={styles.buttonExplanation}>Prioritize quizzes based on date and difficulty.</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
