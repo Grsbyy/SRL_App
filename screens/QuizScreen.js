@@ -6,9 +6,9 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('task.db');
+const db = SQLite.openDatabase('quiz.db');
 
-const TaskPrioritization = ({ navigation }) => {
+const QuizPrio = ({ navigation }) => {
   const [tasks, setTasks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [editmodalVisible, setEditModalVisible] = useState(false);
@@ -31,7 +31,7 @@ const TaskPrioritization = ({ navigation }) => {
   useEffect(() => {
     db.transaction(tx => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, givenDate TEXT, dueDate TEXT, title TEXT, rating INTEGER, desc TEXT, subj TEXT, len INTEGER, completed INTEGER DEFAULT 1);'
+        'CREATE TABLE IF NOT EXISTS quiz (id INTEGER PRIMARY KEY AUTOINCREMENT, givenDate TEXT, dueDate TEXT, title TEXT, rating INTEGER, desc TEXT, subj TEXT, len INTEGER, completed INTEGER DEFAULT 1);'
       );
     });
     fetchTasks();
@@ -40,13 +40,13 @@ const TaskPrioritization = ({ navigation }) => {
   const fetchTasks = () => {
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * FROM task',
+        'SELECT * FROM quiz',
         [],
         (_, { rows: { _array } }) => {
           // Sort tasks based on the algorithm
-          const sortedTasks = _array.map(task => ({
-            ...task,
-            prioritizationScore: calculatePrioritizationScore(task)
+          const sortedTasks = _array.map(quiz => ({
+            ...quiz,
+            prioritizationScore: calculatePrioritizationScore(quiz)
           })).sort((a, b) => a.prioritizationScore - b.prioritizationScore);
 
           setTasks(sortedTasks);
@@ -56,14 +56,14 @@ const TaskPrioritization = ({ navigation }) => {
   };
   
   // Function to calculate the score for a task based on the algorithm
-  const calculatePrioritizationScore = (task) => {
+  const calculatePrioritizationScore = (quiz) => {
     const currentDate = new Date();
-    const dueDate = new Date(task.dueDate);
-    const givenDate = new Date(task.givenDate);
-    const taskLength = parseFloat(task.len);
-    const taskDifficulty = parseInt(task.rating);
+    const dueDate = new Date(quiz.dueDate);
+    const givenDate = new Date(quiz.givenDate);
+    const taskLength = parseFloat(quiz.len);
+    const taskDifficulty = parseInt(quiz.rating);
 
-    let prioritizationScore = ((dueDate - new Date() ) / (1000 * 60 * 60)) + (24 - taskLength) + (10 - taskDifficulty);
+    let prioritizationScore = ((dueDate - new Date() ) / (1000 * 60 * 60)) + (10 - taskDifficulty);
     return prioritizationScore;
   };
   
@@ -76,7 +76,7 @@ const TaskPrioritization = ({ navigation }) => {
 
     db.transaction(tx => {
       tx.executeSql(
-        'INSERT INTO task (givenDate, dueDate, title, rating, desc, subj, len ) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO quiz (givenDate, dueDate, title, rating, desc, subj, len ) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [givenDate, dueDate, title, rating, desc, subj, len ],
         () => {
           fetchTasks();
@@ -94,7 +94,7 @@ const TaskPrioritization = ({ navigation }) => {
     }
     db.transaction(tx => {
       tx.executeSql(
-        'UPDATE task SET givenDate=?, dueDate=?, title=?, rating=?, desc=?, subj=?, len=? WHERE id=?',
+        'UPDATE quiz SET givenDate=?, dueDate=?, title=?, rating=?, desc=?, subj=?, len=? WHERE id=?',
         [givenDate, dueDate, title, rating, desc, subj, len , selectedTask.id],
         () => {
           fetchTasks();
@@ -109,7 +109,7 @@ const TaskPrioritization = ({ navigation }) => {
   const removeTask = (id) => {
     db.transaction(tx => {
       tx.executeSql(
-        'DELETE FROM task WHERE id=?',
+        'DELETE FROM quiz WHERE id=?',
         [id],
         () => fetchTasks()
       );
@@ -119,7 +119,7 @@ const TaskPrioritization = ({ navigation }) => {
   const toggleCompletion = (id) => {
     setCompletedTask((prevCompletedTask) => {
       if (prevCompletedTask.includes(id)) {
-        return prevCompletedTask.filter((taskId) => taskId !== id);
+        return prevCompletedTask.filter((quizId) => quizId !== id);
       } else {
         return [...prevCompletedTask, id];
       }
@@ -165,10 +165,10 @@ const TaskPrioritization = ({ navigation }) => {
     hideDueDatePicker();
   };
 
-  const viewTask = (task) => {
+  const viewTask = (quiz) => {
     Alert.alert(
-      `Task Entry - Due Date: ${task.dueDate} - ${task.title}`,
-      `Title: ${task.title}\nDescription: ${task.desc}\nSubject: ${task.subj}\nDate Task was Given: ${task.givenDate}\nTask Difficulty: ${task.rating}\nTask Length: ${task.len}hrs`,
+      `Task Entry - Due Date: ${quiz.dueDate} - ${quiz.title}`,
+      `Title: ${quiz.title}\nDescription: ${quiz.desc}\nSubject: ${quiz.subj}\nDate Task was Given: ${quiz.givenDate}\nTask Difficulty: ${quiz.rating}`,
       [{ text: 'OK' }]
     );
   };
@@ -179,43 +179,43 @@ const TaskPrioritization = ({ navigation }) => {
       
       <View style={styles.tasksContainer}>
         <ScrollView style={[styles.diariesContainer, , { paddingBottom: 100 }]}>
-        {tasks.map(task => (
+        {tasks.map(quiz => (
           <TouchableOpacity
-            key={task.id}
+            key={quiz.id}
             style={styles.diaryItem}>
             <View>
-              {new Date(task.dueDate) - new Date() < 0 && <Text>Task is due</Text>}
-              <Text>{task.dueDate}</Text>
-              <Text style={[styles.goalText, completedTask.includes(task.id) && styles.completedGoal, (new Date(task.dueDate) - new Date() < 0) && styles.goalTextDue]}>
-                {task.title}
+              {new Date(quiz.dueDate) - new Date() < 0 && <Text>Task is due</Text>}
+              <Text>{quiz.dueDate}</Text>
+              <Text style={[styles.goalText, completedTask.includes(quiz.id) && styles.completedGoal, (new Date(quiz.dueDate) - new Date() < 0) && styles.goalTextDue]}>
+                {quiz.title}
               </Text>
             </View>
-            <TouchableOpacity key={task.id} onPress={() => {
-              setSelectedTask(task);
-              setgivenDate(task.givenDate);
-              setdueDate(task.dueDate);
-              setTitle(task.title);
-              setRating(task.rating);
-              setdesc(task.desc);
-              setsubj(task.subj);
-              setLen(task.len);
+            <TouchableOpacity key={quiz.id} onPress={() => {
+              setSelectedTask(quiz);
+              setgivenDate(quiz.givenDate);
+              setdueDate(quiz.dueDate);
+              setTitle(quiz.title);
+              setRating(quiz.rating);
+              setdesc(quiz.desc);
+              setsubj(quiz.subj);
+              setLen(quiz.len);
               setEditModalVisible(true);
             }} 
             style={styles.editButton}>
               <MaterialCommunityIcons name="pencil" size={24} color="grey" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => viewTask(task)}>
+            <TouchableOpacity onPress={() => viewTask(quiz)}>
               <AntDesign name="eye" size={24} color="grey" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => removeTask(task.id)}>
+            <TouchableOpacity onPress={() => removeTask(quiz.id)}>
               <MaterialCommunityIcons name="delete" size={24} color="#DF3E6E" />
             </TouchableOpacity>
             
-            <TouchableOpacity onPress={() => toggleCompletion(task.id)}>
+            <TouchableOpacity onPress={() => toggleCompletion(quiz.id)}>
               <MaterialCommunityIcons
-                name={completedTask.includes(task.id) ? 'checkbox-marked' : 'checkbox-blank-outline'}
+                name={completedTask.includes(quiz.id) ? 'checkbox-marked' : 'checkbox-blank-outline'}
                 size={24}
-                color={completedTask.includes(task.id) ? '#7455F7' : '#7455F7'}
+                color={completedTask.includes(quiz.id) ? '#7455F7' : '#7455F7'}
                 style={styles.icon}
                 />
             </TouchableOpacity>
@@ -260,13 +260,6 @@ const TaskPrioritization = ({ navigation }) => {
               placeholder="Task Subject"
               value={subj}
               onChangeText={(text) => setsubj(text)}
-            />
-            <TextInput
-              style={styles.titleInput}
-              placeholder="Estimated Task Length in Hours"
-              value={len}
-              onChangeText={setLen}
-              keyboardType='numeric'
             />
             <Text style={styles.label}>Task Difficulty Rating</Text>
             <Picker
@@ -333,13 +326,7 @@ const TaskPrioritization = ({ navigation }) => {
               value={subj}
               onChangeText={(text) => setsubj(text)}
             />
-            <TextInput
-              style={styles.titleInput}
-              placeholder="Estimated Task Length in Hours"
-              value={len}
-              onChangeText={setLen}
-              keyboardType='numeric'
-            />
+        
             <Text style={styles.label}>Task Difficulty Rating</Text>
             <Picker
               selectedValue={rating}
@@ -586,4 +573,4 @@ const styles = StyleSheet.create({
 
 
 
-export default TaskPrioritization;
+export default QuizPrio;

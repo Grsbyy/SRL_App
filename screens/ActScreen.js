@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated } from '
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const PlanScreen = ({ navigation }) => {
+const Act = ({ navigation }) => {
   const [scrollY] = useState(new Animated.Value(0));
   const [showSettingsButton, setShowSettingsButton] = useState(true);
 
@@ -35,7 +35,6 @@ const PlanScreen = ({ navigation }) => {
           <Text style={styles.title}>ACT</Text>
           <Text style={styles.explanation}>
           The Act phase involves implementing academic strategies, tracking performance, and engaging in actions aimed at achieving learning goals.{"\n"}
-          Students in this phase actively apply study techniques such as summarizing, organizing, and reviewing material. They monitor their progress by assessing their performance and adjusting strategies accordingly. {"\n"}
           This phase emphasizes the importance of taking proactive steps towards learning objectives, fostering autonomy and effectiveness in academic pursuits.
           </Text>
         </View>
@@ -45,7 +44,13 @@ const PlanScreen = ({ navigation }) => {
             style={[styles.button, styles.taskPrioritizationButton]}
             onPress={() => navigateToScreen('AcadStrat')}>
             <Text style={styles.buttonText}>Academic Strategies</Text>
-            <Text style={styles.buttonExplanation}>mploying various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.</Text>
+            <Text style={styles.buttonExplanation}>Employing various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigateToScreen('Other')}>
+            <Text style={styles.buttonText}>Other Study Techniques</Text>
+            <Text style={styles.buttonExplanation}>Exploring additional methods such as Pomodor and Feynman Techniques to optimize retention and understanding of course material.</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -58,12 +63,6 @@ const PlanScreen = ({ navigation }) => {
             onPress={() => navigateToScreen('GWACalc')}>
             <Text style={styles.buttonText}>GWA Calculator</Text>
             <Text style={styles.buttonExplanation}>Utilizing a tool to track and calculate General Weighted Average (GWA) based on grades earned in courses, providing insight into academic performance.</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigateToScreen('Other')}>
-            <Text style={styles.buttonText}>Other Study Techniques</Text>
-            <Text style={styles.buttonExplanation}>Exploring additional methods such as Pomodor and Feynman Techniques to optimize retention and understanding of course material.</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -172,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlanScreen;
+export default Act;

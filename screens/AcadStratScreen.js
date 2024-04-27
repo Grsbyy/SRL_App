@@ -13,6 +13,7 @@ const AcadStrat = ({ navigation }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [modalVisible, setModalVisible] = useState(false);
+  const [filteredStrategies, setFilteredStrategies] = useState([]);;
 
   const academicStrategies = [
     { name: 'Mind Mapping', type: 'Visual Learning Strategy', description: 'Create visual diagrams to represent relationships between concepts. Start with a central idea and branch out with related subtopics.' },
@@ -122,12 +123,19 @@ const AcadStrat = ({ navigation }) => {
               onChangeText={text => setSearchText(text)}
               onSubmitEditing={handleSearch}
             />
-            {filterStrategies().map((strategy, index) => (
-              <TouchableOpacity key={index} onPress={() => selectStrategy(strategy)}>
-
-                <Text style={styles.strategyButton}>{strategy.name} </Text>
-              </TouchableOpacity>
-            ))}
+             {filteredStrategies.length > 0 ? (
+    filteredStrategies.map((strategy, index) => (
+      <TouchableOpacity key={index} onPress={() => selectStrategy(strategy)}>
+        <Text style={styles.strategyButton}>{strategy.name}</Text>
+      </TouchableOpacity>
+    ))
+  ) : (
+    filterStrategies().map((strategy, index) => (
+      <TouchableOpacity key={index} onPress={() => selectStrategy(strategy)}>
+        <Text style={styles.strategyButton}>{strategy.name}</Text>
+      </TouchableOpacity>
+    ))
+  )}
           </View>
         )}
       </ScrollView>

@@ -1,9 +1,21 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet,  ScrollView, Animated} from 'react-native';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const PlanScreen = ({ navigation }) => {
+const Plan = ({ navigation }) => {
+  const [scrollY] = useState(new Animated.Value(0));
+  const [showSettingsButton, setShowSettingsButton] = useState(true);
+
+  useEffect(() => {
+    const listenerId = scrollY.addListener(({ value }) => {
+      setShowSettingsButton(value <= 0);
+    });
+
+    return () => {
+      scrollY.removeListener(listenerId);
+    };
+  }, []);
   // Function to navigate to respective screens
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
@@ -11,6 +23,13 @@ const PlanScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}>
       <View style={styles.header}>
         <Text style={styles.title}>PLAN</Text>
         <Text style={styles.explanation}>
@@ -26,6 +45,12 @@ const PlanScreen = ({ navigation }) => {
           <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={[styles.button]}
+          onPress={() => navigateToScreen('QuizPrio')}>
+          <Text style={styles.buttonText}>Quiz Prioritization</Text>
+          <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.button}
           onPress={() => navigateToScreen('GoalSetting')}>
           <Text style={styles.buttonText}>Goal Setting</Text>
@@ -38,6 +63,7 @@ const PlanScreen = ({ navigation }) => {
           <Text style={styles.buttonExplanation}>Organizing tasks and assignments for each week to effectively manage time.</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
 
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
         <Entypo name="home" size={25} color="white" paddingRight={10} paddingTop={10} />
@@ -55,7 +81,7 @@ const PlanScreen = ({ navigation }) => {
           <MaterialCommunityIcons name="chart-line" size={40} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
-    </View>
+      </View>
   );
 };
 
@@ -97,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 100,
     width: 320, 
-    marginTop: 30, 
+    marginTop: 20, 
     
   },
   button: {
@@ -150,4 +176,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlanScreen;
+export default Plan;

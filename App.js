@@ -14,6 +14,7 @@ import Homescreen from './screens/Homescreen';
 import Planner from './screens/PlannerScreen';
 import AddTaskScreen from './screens/AddTaskScreen';
 import otherScreen from './screens/otherScreen'
+import QuizScreen from './screens/QuizScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const App = () => {
         <Stack.Screen name="Plan" component={PlanScreen} options={{ headerShown: null }} />
         <Stack.Screen name="Act" component={ActScreen} options={{ headerShown: null }}/>
         <Stack.Screen name="TaskPrioritization" component={TaskPrioritizationScreen} options={{ headerTitle: 'Task Prioritization' }}/>
+        <Stack.Screen name="QuizPrio" component={QuizScreen} options={{ headerTitle: 'Quiz Prioritization' }}/>
         <Stack.Screen name="Reflect" component={ReflectScreen} options={{ headerShown: null }} />
         <Stack.Screen name="GoalSetting" component={GoalSettingScreen} options={{ headerTitle: 'Goal Setting' }}/>
         <Stack.Screen name="AcadStrat" component={AcadStratScreen} options={{ headerTitle: 'Academic Strategies' }} />
