@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, ScrollView, Alert } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { AntDesign, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { Octicons, Entypo, FontAwesome5, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as SQLite from 'expo-sqlite';
 
@@ -136,43 +135,45 @@ const ReflectScreen = ({ navigation }) => {
 
   return (
     <LinearGradient colors={['#373856', '#121327']} start={{x: 1, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
-      <Text style={styles.header}>REFLECT</Text>
-      {showSettingsButton && (
-          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-            <Entypo name="home" size={25} color="grey" />
-          </TouchableOpacity>
-        )}
+      <Text style={styles.header}>Reflect</Text>
       
       <ScrollView style={styles.diariesContainer}>
         {diaries.map(diary => (
-          <TouchableOpacity
+          
+          <TouchableOpacity     
             key={diary.id}
-            style={styles.diaryItem}>
+            style={styles.diaryItem}
+            onPress={() => viewDiary(diary)}>
             <View style={{width:'60%'}}>
-              <Text>{diary.date}</Text>
-              <Text>{diary.title}</Text>
+              <Text style={styles.diaryDate}>{diary.date}</Text>
+              <Text style={styles.diaryTitle}>{diary.title}</Text>
             </View>
-            <TouchableOpacity key={diary.id}
-            onPress={() => {
-              setSelectedDiary(diary);
-              setDate(diary.date);
-              setTitle(diary.title);
-              setRating(diary.rating);
-              setHowDayWent(diary.howDayWent);
-              setWhatIDidToday(diary.whatIDidToday);
-              setOthers(diary.others);
-              setEditModalVisible(true);
-            }} style={styles.editButton}>
-              <MaterialCommunityIcons name="pencil" size={24} color="grey" />
-            </TouchableOpacity>
-            <TouchableOpacity style={{marginRight:10}} onPress={() => viewDiary(diary)}>
-              <AntDesign name="eye" size={24} color="grey" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => removeDiary(diary.id)}>
-              <MaterialCommunityIcons name="delete" size={24} color="#DF3E6E" />
-            </TouchableOpacity>    
+
+          <TouchableOpacity 
+          key={`edit_${diary.id}`}
+          onPress={() => {
+            setSelectedDiary(diary);
+            setDate(diary.date);
+            setTitle(diary.title);
+            setRating(diary.rating);
+            setHowDayWent(diary.howDayWent);
+            setWhatIDidToday(diary.whatIDidToday);
+            setOthers(diary.others);
+            setEditModalVisible(true);
+          }} style={styles.editButton}>
+            <Feather name="edit-2" size={20} color="grey" />
           </TouchableOpacity>
+          <TouchableOpacity 
+            key={`delete_${diary.id}`}
+            onPress={() => removeDiary(diary.id)}
+            style={{marginLeft: -50}}>
+            <Octicons name="trash" size={20} color="#DF3E6E" />
+          </TouchableOpacity>    
+        </TouchableOpacity>
+
+          
         ))}
+        <View style={{paddingBottom: 200}}></View>
       </ScrollView>
       
       <Modal
@@ -180,68 +181,79 @@ const ReflectScreen = ({ navigation }) => {
         transparent={true}
         visible={editmodalVisible}
         onRequestClose={() => setEditModalVisible(false)}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Edit Diary Entry</Text>
-            <TouchableOpacity onPress={showDatePicker}>
-              <Text style={styles.datePickerText}>{date ? date : 'Select Date'}</Text>
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirmDate}
-              onCancel={hideDatePicker}
-            />
-            <TextInput
-              style={styles.titleInput}
-              placeholder="Title"
-              value={title}
-              onChangeText={(text) => setTitle(text)}
-              maxLength={20}
-            />
-            <Text style={styles.label}>Rating of the Day</Text>
-            <Picker
-              selectedValue={rating}
-              style={{ height: 40, width: 200 }}
-              onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
-              <Picker.Item label="1 - Very Good" value={1} />
-              <Picker.Item label="2 - Good " value={2} />
-              <Picker.Item label="3 - Okay" value={3} />
-              <Picker.Item label="4 - Bad" value={4} />
-              <Picker.Item label="5 - Very Bad" value={5} />
-            </Picker>
-            <TextInput
-              style={styles.bigInput}
-              placeholder="How the day went by?"
-              value={howDayWent}
-              onChangeText={(text) => setHowDayWent(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="What I did today?"
-              value={whatIDidToday}
-              onChangeText={(text) => setWhatIDidToday(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="Others"
-              value={others}
-              onChangeText={(text) => setOthers(text)}
-            />
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setEditModalVisible(false)}>
-                <Text style={[styles.buttonText, {color:'#7455F7'}]}>Cancel</Text>
+
+        <ScrollView>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalHeader}>Edit Diary Entry</Text>
+              <View style={styles.diaryImportant}>
+                <TextInput
+                  style={styles.titleInput}
+                  placeholder="Title"
+                  value={title}
+                  onChangeText={(text) => setTitle(text)}
+                  maxLength={20}
+                />
+                <TouchableOpacity onPress={showDatePicker} style={styles.dateIcon}>
+                <Entypo name='calendar' size={20} color='rgba(255,255,255,0.8)'/>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.submitButton]}
-                onPress={editDiary}>
-                <Text style={styles.buttonText}>Apply Changes</Text>
-              </TouchableOpacity>
+              </View>
+              
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirmDate}
+                onCancel={hideDatePicker}
+              />
+              
+              <Text style={styles.label}>Rating of the Day</Text>
+              <Picker
+                selectedValue={rating}
+                style={{ height: 40, width: 200, color:'white' }}
+                onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
+                <Picker.Item label="1 - Very Good" value={1} style={{color:'grey'}}/>
+                <Picker.Item label="2 - Good " value={2} style={{color:'grey'}}/>
+                <Picker.Item label="3 - Okay" value={3} style={{color:'grey'}}/>
+                <Picker.Item label="4 - Bad" value={4} style={{color:'grey'}}/>
+                <Picker.Item label="5 - Very Bad" value={5} style={{color:'grey'}}/>
+              </Picker>
+              <TextInput
+                style={styles.bigInput}
+                placeholder="How the day went by?"
+                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                value={howDayWent}
+                onChangeText={(text) => setHowDayWent(text)}
+              />
+              <TextInput
+                style={styles.bigInput}
+                placeholder="What I did today?"
+                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                value={whatIDidToday}
+                onChangeText={(text) => setWhatIDidToday(text)}
+              />
+              <TextInput
+                style={styles.bigInput}
+                placeholder="Others"
+                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                value={others}
+                onChangeText={(text) => setOthers(text)}
+              />
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={[styles.button, styles.cancelButton]}
+                  onPress={() => setEditModalVisible(false)}>
+                  <Text style={[styles.buttonText, {color:'#9a7de8'}]}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.submitButton]}
+                  onPress={editDiary}>
+                  <Text style={styles.buttonText}>Apply Changes</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
+        
       </Modal>
       
       <Modal
@@ -249,68 +261,84 @@ const ReflectScreen = ({ navigation }) => {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Add Diary Entry</Text>
-            <TouchableOpacity onPress={showDatePicker}>
-              <Text style={styles.datePickerText}>{date ? date : 'Select Date'}</Text>
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirmDate}
-              onCancel={hideDatePicker}
-            />
-            <TextInput
-              style={styles.titleInput}
-              placeholder="Title"
-              value={title}
-              onChangeText={(text) => setTitle(text)}
-              maxLength={20}
-            />
-            <Text style={styles.label}>Rating of the Day</Text>
-            <Picker
-              selectedValue={rating}
-              style={{ height: 40, width: 200 }}
-              onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
-              <Picker.Item label="1 - Very Good" value={1} />
-              <Picker.Item label="2 - Good " value={2} />
-              <Picker.Item label="3 - Okay" value={3} />
-              <Picker.Item label="4 - Bad" value={4} />
-              <Picker.Item label="5 - Very Bad" value={5} />
-            </Picker>
-            <TextInput
-              style={styles.bigInput}
-              placeholder="How the day went by?"
-              value={howDayWent}
-              onChangeText={(text) => setHowDayWent(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="What I did today?"
-              value={whatIDidToday}
-              onChangeText={(text) => setWhatIDidToday(text)}
-            />
-            <TextInput
-              style={styles.bigInput}
-              placeholder="Others"
-              value={others}
-              onChangeText={(text) => setOthers(text)}
-            />
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}>
-                <Text style={[{color:'#7455F7', fontWeight:'bold'}]}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.submitButton]}
-                onPress={addDiary}>
-                <Text style={[{color:'white', fontWeight:'bold'}]}>Submit</Text>
-              </TouchableOpacity>
+
+        <ScrollView>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalHeader}>Add Diary Entry</Text>
+              <View style={styles.diaryImportant}>
+                <TextInput
+                  style={styles.titleInput}
+                  placeholder="Title"
+                  placeholderTextColor={'rgba(255,255,255,0.5)'}
+                  value={title}
+                  onChangeText={(text) => setTitle(text)}
+                  maxLength={20}
+                />
+                <TouchableOpacity onPress={showDatePicker} style={styles.dateIcon}>
+                  <Entypo name='calendar' size={20} color='rgba(255,255,255,0.8)'/>
+                </TouchableOpacity>
+              </View>
+
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirmDate}
+                onCancel={hideDatePicker}
+              />
+
+              <Text style={styles.label}>Rating of the Day</Text>
+              <Picker
+                selectedValue={rating}
+                dropdownIconColor={'white'}
+                style={{ height: 40, width: 300, alignSelf: 'flex-start', color:'white' }}
+                onValueChange={(itemValue, itemIndex) => setRating(itemValue)}>
+                <Picker.Item label="1 - Very Good" value={1} style={{color:'grey'}}/>
+                <Picker.Item label="2 - Good " value={2} style={{color:'grey'}}/>
+                <Picker.Item label="3 - Okay" value={3} style={{color:'grey'}}/>
+                <Picker.Item label="4 - Bad" value={4} style={{color:'grey'}}/>
+                <Picker.Item label="5 - Very Bad" value={5} style={{color:'grey'}}/>
+              </Picker>
+              <TextInput
+                style={styles.bigInput}
+                placeholder="How the day went by?"
+                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                multiline={true}
+                value={howDayWent}
+                onChangeText={(text) => setHowDayWent(text)}
+              />
+              <TextInput
+                style={styles.bigInput}
+                placeholder="What I did today?"
+                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                multiline={true}
+                value={whatIDidToday}
+                onChangeText={(text) => setWhatIDidToday(text)}
+              />
+              <TextInput
+                style={styles.bigInput}
+                placeholder="Others"
+                placeholderTextColor={'rgba(255,255,255,0.5)'}
+                multiline={true}
+                value={others}
+                onChangeText={(text) => setOthers(text)}
+              />
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={[styles.button, styles.cancelButton]}
+                  onPress={() => setModalVisible(false)}>
+                  <Text style={[{color:'#9a7de8', fontWeight:'bold'}]}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.submitButton]}
+                  onPress={addDiary}>
+                  <Text style={[{color:'white', fontWeight:'bold'}]}>Submit</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
+        
       </Modal>
       
       <TouchableOpacity
@@ -320,7 +348,14 @@ const ReflectScreen = ({ navigation }) => {
           setSelectedDiary(null);
           resetInputs();
         }}>
-        <MaterialCommunityIcons name="plus" size={24} color="white" />
+        <LinearGradient colors={['#633ef7', '#b63ef7']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.addButtonGradient}>
+          <MaterialCommunityIcons name="plus" size={24} color="white" />
+        </LinearGradient>
+        
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
+        <Entypo name="home" size={20} color="rgba(255, 255, 255, 0.8)" paddingRight={10} paddingTop={10} />
       </TouchableOpacity>
 
       <View style={styles.bottomContainer}>
@@ -331,7 +366,7 @@ const ReflectScreen = ({ navigation }) => {
           <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <FontAwesome5 name="feather-alt" size={25} color="#7455F7" />
+          <FontAwesome5 name="feather-alt" size={25} color="#6de391" />
         </TouchableOpacity>
       </View>
     </LinearGradient>
@@ -351,6 +386,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
+    paddingBottom: 20
   },
   diariesContainer: {
     flex: 1,
@@ -359,10 +395,23 @@ const styles = StyleSheet.create({
   diaryItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '90%',
+    alignSelf: 'center',
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    backgroundColor: '#353766',
+    marginBottom: 10
+  },
+  diaryDate:{
+    color: 'rgba(255,255,255,0.9)',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  diaryTitle: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 14,
   },
   settingsButton: {
     position: 'absolute',
@@ -380,6 +429,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  addButtonGradient:{
+    height: '100%',
+    width: '100%',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -387,17 +443,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView: {
-    backgroundColor: 'white',
+    backgroundColor: '#2f2d30',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
     elevation: 5,
+    width: '100%'
   },
   modalHeader: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#7455F7'
+    color: '#9a7de8'
   },
   datePickerText: {
     borderWidth: 1,
@@ -408,16 +465,30 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
   },
+  diaryImportant:{
+    width: 300,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20
+  },
   titleInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 5,
+    borderRadius: 15,
     width: '100%',
+    color: 'white',
+    textAlign: 'left',
+    backgroundColor: '#242326',
+    paddingHorizontal: 20,
+    height: 50,
+  },
+  dateIcon:{
+    position: 'absolute',
+    right: 20
   },
   label: {
     alignSelf: 'flex-start',
+    color: '#8461c9',
+    fontWeight: 'bold',
     marginLeft: 10,
     marginBottom: 0,
   },
@@ -427,14 +498,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   bigInput: {
-    borderWidth: 2,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
+    borderRadius: 15,
+    padding: 20,
     marginBottom: 10,
     width: 300,
     height: 100,
     textAlignVertical: 'top',
+    backgroundColor: '#242326',
+    color: 'white',
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -445,17 +516,17 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
+    borderRadius: 10,
     paddingVertical: 10,
     width: '45%',
 
   },
   cancelButton: {
     borderWidth: 2,
-    borderColor: '#7455F7'
+    borderColor: '#9a7de8'
   },
   submitButton: {
-    backgroundColor: '#7455F7',
+    backgroundColor: '#9a7de8',
   },
   buttonText: {
     color: 'white',

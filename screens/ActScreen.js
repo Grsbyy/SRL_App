@@ -145,7 +145,7 @@ const Act = ({ navigation }) => {
           <MaterialCommunityIcons name="calendar-month" size={30} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#7455F7" />
+          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#e67850" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
           <FontAwesome5 name="feather-alt" size={25} color="#A9A9A9" />

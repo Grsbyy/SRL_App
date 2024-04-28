@@ -57,7 +57,7 @@ const Plan = ({ navigation }) => {
             <LinearGradient colors={['#633ef7', '#b63ef7']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.iconContainer}>
               <FontAwesome5 name='tasks' size={25} color='#fff'></FontAwesome5>
             </LinearGradient>
-            <Text style={[styles.buttonText, {color: '#52bfc7'}]}>Task Prioritization</Text>
+            <Text style={[styles.buttonText, {color: '#af80ed'}]}>Task Prioritization</Text>
             <Text style={styles.buttonExplanation}>Prioritize tasks based on deadlines, difficulty, and importance.</Text>
           </TouchableOpacity>
 
@@ -100,7 +100,7 @@ const Plan = ({ navigation }) => {
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-month" size={30} color="#7455F7" />
+          <MaterialCommunityIcons name="calendar-month" size={30} color="#f071bb" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
           <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#A9A9A9" />
