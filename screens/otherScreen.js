@@ -13,8 +13,10 @@ const Other = ({ navigation }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [modalVisible, setModalVisible] = useState(false);
+  const [filteredStrategies, setFilteredStrategies] = useState([]);;
 
-  const academicStrategies = [
+
+  const otherStrategies = [
     { name: 'Pomodoro Technique', type: 'Breaks study sessions into intervals, typically 25 minutes of focused work followed by a short break.', description: 'Instructions: Set a timer for 25 minutes and work on a specific task without interruption. Take a 5-minute break after each session, and after four sessions, take a longer break.' },
     { name: 'Cornell Note-Taking ', type: 'Structured note-taking method with sections for main ideas, key points, and summaries.', description: 'Instructions: Divide your note paper into three sections: cues/questions, notes, and a summary. Take notes during class or while reading, then summarize the main points in the bottom section.' },
     { name: 'Reward System', type: 'Establishing incentives or rewards for achieving academic milestones or completing tasks.', description: 'Instructions: Set specific goals or milestones and define rewards for reaching them, such as a break, a treat, or a fun activity. Use rewards as motivation to stay focused and productive.' },
@@ -77,7 +79,7 @@ const Other = ({ navigation }) => {
   ];
 
   const handleSearch = () => {
-    const filtered = academicStrategies.filter(strategy => strategy.name.toLowerCase().includes(searchText.toLowerCase()));
+    const filtered = otherStrategies.filter(strategy => strategy.name.toLowerCase().includes(searchText.toLowerCase()));
     setSelectedStrategy(null); // Reset selected strategy
     setSearchText(''); // Clear search text
     setFilteredStrategies(filtered);
@@ -93,7 +95,7 @@ const Other = ({ navigation }) => {
   };
 
   const filterStrategies = () => {
-    return academicStrategies.filter(strategy => selectedTypes.length === 0 || selectedTypes.includes(strategy.type)).sort((a, b) => {
+    return filteredStrategies.length > 0 ? filteredStrategies : otherStrategies.filter(strategy => selectedTypes.length === 0 || selectedTypes.includes(strategy.type)).sort((a, b) => {
       if (sortOrder === 'asc') {
         return a.name.localeCompare(b.name);
       } else {
