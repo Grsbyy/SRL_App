@@ -365,29 +365,7 @@ const QuizPrio = ({ navigation }) => {
         <MaterialCommunityIcons name="plus" size={24} color="white" />
       </TouchableOpacity>
       
-      <View style={styles.navButtonsContainer}>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
-        </TouchableOpacity>
-
-        {showSettingsButton && (
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-          <AntDesign name="setting" size={30} color="black" />
-        </TouchableOpacity>
-      )}
-      </View>
+      
     </View>
   );
 };
