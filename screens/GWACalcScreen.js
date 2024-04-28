@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const GWACalc = ({ navigation }) => {
   const navigateToScreen = (screenName) => {
@@ -130,82 +131,99 @@ const GWACalc = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.gradePickerContainer}>
-        <Text style={styles.label}>Choose Grade:</Text>
-        <Picker
-          selectedValue={selectedGrade}
-          onValueChange={(itemValue, itemIndex) => handleGradeChange(itemValue)}>
-          {Object.keys(grades).map((grade, index) => (
-            <Picker.Item key={index} label={grade} value={grade} />
-          ))}
-        </Picker>
-      </View>
-      {Object.entries(grades[selectedGrade]).map(([subject, grade], index) => (
-        <View key={index} style={styles.subjectContainer}>
-          <Text style={styles.subjectLabel}>{subject} ({getSubjectUnits(subject)} Units)</Text>
+    <LinearGradient colors={['#373856', '#121327']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
+
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.gradePickerContainer}>
+          <Text style={styles.label}>Choose Grade:</Text>
           <Picker
-            style={styles.gradeInput}
-            selectedValue={grade}
-            onValueChange={(itemValue, itemIndex) => handleGradeInput(subject, itemValue)}>
-            <Picker.Item label="1.0" value={1.0} />
-            <Picker.Item label="1.25" value={1.25} />
-            <Picker.Item label="1.50" value={1.50} />
-            <Picker.Item label="1.75" value={1.75} />
-            <Picker.Item label="2.0" value={2.0} />
-            <Picker.Item label="2.25" value={2.25} />
-            <Picker.Item label="2.50" value={2.50} />
-            <Picker.Item label="2.75" value={2.75} />
-            <Picker.Item label="3.0" value={3.0} />
-            <Picker.Item label="4.0" value={4.0} />
-            <Picker.Item label="5.0" value={5.0} />
+            dropdownIconColor={'white'}
+            style={{color:'rgba(255,255,255,0.9)'}}
+            selectedValue={selectedGrade}
+            onValueChange={(itemValue, itemIndex) => handleGradeChange(itemValue)}>
+            {Object.keys(grades).map((grade, index) => (
+              <Picker.Item key={index} label={grade} value={grade} />
+            ))}
           </Picker>
         </View>
-      ))}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.calculateButton} onPress={() => Alert.alert(
-          "GWA Result", 
-          `Your GWA is: ${calculateGWA()} ${calculateGWA() <= 1.50 ? "Congratulations! You Are Part of the Director's List!":""}`,
-          [
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-          ]
-        )}>
-          <Text style={styles.calculateButtonText}>Calculate GWA</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        {Object.entries(grades[selectedGrade]).map(([subject, grade], index) => (
+          <View key={index} style={styles.subjectContainer}>
+            <Text style={styles.subjectLabel}>{subject} ({getSubjectUnits(subject)} Units)</Text>
+            <Picker
+              style={styles.gradeInput}
+              dropdownIconColor={'white'}
+              selectedValue={grade}
+              onValueChange={(itemValue, itemIndex) => handleGradeInput(subject, itemValue)}>
+              <Picker.Item label="1.0" value={1.0} />
+              <Picker.Item label="1.25" value={1.25} />
+              <Picker.Item label="1.50" value={1.50} />
+              <Picker.Item label="1.75" value={1.75} />
+              <Picker.Item label="2.0" value={2.0} />
+              <Picker.Item label="2.25" value={2.25} />
+              <Picker.Item label="2.50" value={2.50} />
+              <Picker.Item label="2.75" value={2.75} />
+              <Picker.Item label="3.0" value={3.0} />
+              <Picker.Item label="4.0" value={4.0} />
+              <Picker.Item label="5.0" value={5.0} />
+            </Picker>
+          </View>
+        ))}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.calculateButton} onPress={() => Alert.alert(
+            "GWA Result", 
+            `Your GWA is: ${calculateGWA()} ${calculateGWA() <= 1.50 ? "Congratulations! You Are Part of the Director's List!":""}`,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          )}>
+            <Text style={styles.calculateButtonText}>Calculate GWA</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+
+    </LinearGradient>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  scrollContainer: {
     flexGrow: 1,
+    width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f0f0f0', // Background color for the entire screen
   },
   gradePickerContainer: {
-    width: '100%',
+    width: 300,
     marginBottom: 20,
   },
   label: {
     fontSize: 18,
     marginBottom: 5,
     fontWeight: 'bold', 
+    color: 'rgba(255,255,255,0.9)'
   },
   subjectContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    alignSelf: 'flex-start',
+    width: '100%'
   },
   subjectLabel: {
     flex: 1,
     fontSize: 16,
+    color: 'rgba(255,255,255,0.9)',
   },
   gradeInput: {
     flex: 1,
     height: 40,
+    color: 'white'
   },
   buttonContainer: {
     width: '100%',
