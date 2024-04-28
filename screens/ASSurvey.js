@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert, Modal, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ASSurvey = ({ navigation }) => {
   const [answers, setAnswers] = useState(Array(10).fill('')); // Array to store user's answers
@@ -155,7 +156,7 @@ const ASSurvey = ({ navigation }) => {
               style={[styles.optionButton, answers[index] === option.charAt(0) ? styles.selectedOption : null]} // Add conditional styling
               onPress={() => handleAnswerSelection(index, option.charAt(0))}
             >
-              <Text>{option}</Text>
+              <Text style={{color:'rgba(255,255,255,0.8)'}}>{option}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -169,7 +170,7 @@ const ASSurvey = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['#373856', '#121327']} start={{x: 1, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
       <ScrollView style={styles.scrollView}>
         {renderQuestions()}
       </ScrollView>
@@ -204,19 +205,7 @@ const ASSurvey = ({ navigation }) => {
         </View>
       </Modal>
 
-   
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -236,6 +225,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'white'
   },
   optionsContainer: {
     flexDirection: 'column',
@@ -243,14 +233,14 @@ const styles = StyleSheet.create({
   optionButton: {
     padding: 10,
     marginBottom: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
+    backgroundColor: 'rgba(150, 150, 150, 0.3)',
+    borderRadius: 10,
   },
   selectedOption: { // Style for selected option
     backgroundColor: '#9c76fc',
   },
   submitButton: {
-    backgroundColor: '#7844fa',
+    backgroundColor: '#633ef7',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',

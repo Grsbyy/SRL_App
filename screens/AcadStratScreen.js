@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ScrollView, Modal } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const AcadStrat = ({ navigation }) => {
     
@@ -101,62 +102,46 @@ const AcadStrat = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['#373856', '#121327']} start={{x: 1, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
       
       <View style={styles.header}>
-        <Text style={styles.headerText}>Academic Strategies</Text>
+        <TextInput
+              style={styles.searchInput}
+              placeholder="Search Academic Strategies"
+              placeholderTextColor={'rgba(255,255,255,0.8)'}
+              value={searchText}
+              onChangeText={text => setSearchText(text)}
+              onSubmitEditing={handleSearch}
+            />
         {!selectedStrategy && (
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <FontAwesome name="filter" size={24} color="#8a5dfb" />
+          <TouchableOpacity style={styles.filterIcon} onPress={() => setModalVisible(true)}>
+            <FontAwesome name="filter" size={24} color="white" />
           </TouchableOpacity>
         )}
       </View>
+
       <ScrollView style={styles.scrollContainer}>
         {selectedStrategy ? (
           <StratDetails strategy={selectedStrategy} onClose={() => setSelectedStrategy(null)} />
         ) : (
           <View style={styles.section}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search Academic Strategies"
-              value={searchText}
-              onChangeText={text => setSearchText(text)}
-              onSubmitEditing={handleSearch}
-            />
+          
              {filteredStrategies.length > 0 ? (
-    filteredStrategies.map((strategy, index) => (
-      <TouchableOpacity key={index} onPress={() => selectStrategy(strategy)}>
-        <Text style={styles.strategyButton}>{strategy.name}</Text>
-      </TouchableOpacity>
-    ))
-  ) : (
-    filterStrategies().map((strategy, index) => (
-      <TouchableOpacity key={index} onPress={() => selectStrategy(strategy)}>
-        <Text style={styles.strategyButton}>{strategy.name}</Text>
-      </TouchableOpacity>
-    ))
-  )}
+              filteredStrategies.map((strategy, index) => (
+            <TouchableOpacity  style={styles.strategyButton} key={index} onPress={() => selectStrategy(strategy)}>
+              <Text>{strategy.name}</Text>
+            </TouchableOpacity>
+            ))
+            ) : (
+          filterStrategies().map((strategy, index) => (
+            <TouchableOpacity key={index} onPress={() => selectStrategy(strategy)}>
+              <Text style={styles.strategyButton}>{strategy.name}</Text>
+            </TouchableOpacity>
+            ))
+          )}
           </View>
         )}
       </ScrollView>
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
-        </TouchableOpacity>
-      </View>
 
       <Modal
         animationType="slide"
@@ -201,7 +186,7 @@ const AcadStrat = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -226,78 +211,68 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f0f0f0', // Background color for the entire screen
-    paddingBottom: 90, 
     
   },
   scrollContainer: {
     flex: 1,
     width: '100%',
-    
   },
   section: {
     width: '100%',
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    marginBottom: 10,
+    justifyContent: 'center',
+    width: 300,
+    marginBottom: 20,
   },
   sectionHeader: {
     fontWeight: 'bold',
+    color: 'rgba(255,255,255,0.8)'
     
   },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   searchInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderRadius: 10,
+    width: '100%',
+    color: 'white',
+    textAlign: 'left',
+    backgroundColor: '#474978',
+    paddingHorizontal: 20,
+    height: 50,
+  },
+  filterIcon:{
+    position: 'absolute',
+    right: 20
   },
   strategyButton: {
-    fontSize: 16,
-    marginBottom: 5,
-    color: 'blue', // Add color to make it clickable
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingBottom: 10,
+    backgroundColor: '#464763',
     paddingVertical: 10,
-    backgroundColor: '#8a5dfb',
-    borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 35,
+    paddingHorizontal: 20,
+    borderRadius: 15,
+    fontSize: 16,
+    marginBottom: 8,
+    color: 'white', // Add color to make it clickable
   },
   backButton: {
-    color: 'blue',
+    color: '#8a5dfb',
     marginTop: 10,
   },
   strategyName: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: 'rgba(255,255,255,1)'
   },
   strategyType: {
     fontSize: 16,
     marginBottom: 10,
-    color: 'gray',
+    color: 'rgba(255,255,255,0.7)'
   },
   strategyDescription: {
     fontSize: 16,
     marginBottom: 10,
+    color: 'rgba(255,255,255,0.6)'
   },
   centeredView: {
     flex: 1,
@@ -337,13 +312,6 @@ const styles = StyleSheet.create({
   selectedFilter: {
     backgroundColor: 'blue',
     color: 'white',
-  },
-  openButton: {
-    backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    marginTop: 10,
   },
   closeButton: {
     backgroundColor: "#FF5733",

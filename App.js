@@ -24,9 +24,9 @@ const App = () => {
       <Stack.Navigator initialRouteName="Main"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#8a5dfb', // Change header background color
+            backgroundColor: '#353766', // Change header background color
           },
-          headerTintColor: 'white', // Change header text font color
+          headerTintColor: 'rgba(255,255,255,0.8)', // Change header text font color
           headerTitleStyle: {
             fontWeight: 'bold', // You can also customize font family, size, etc.
           },
@@ -39,7 +39,7 @@ const App = () => {
         <Stack.Screen name="QuizPrio" component={QuizScreen} options={{ headerTitle: 'Quiz Prioritization' }}/>
         <Stack.Screen name="Reflect" component={ReflectScreen} options={{ headerShown: null }} />
         <Stack.Screen name="GoalSetting" component={GoalSettingScreen} options={{ headerTitle: 'Goal Setting' }}/>
-        <Stack.Screen name="AcadStrat" component={AcadStratScreen} options={{ headerTitle: 'Academic Strategies' }} />
+        <Stack.Screen name="AcadStrat" component={AcadStratScreen} options={{ headerTitle: 'Academic Strategies'}} />
         <Stack.Screen name="ASSurvey" component={ASSurvey} options={{ headerTitle: ' Survey' }}/>
         <Stack.Screen name="GWACalc" component={GWACalcScreen} options={{ headerTitle: 'GWA Calculator' }} />
         <Stack.Screen name="WPlanner" component={Planner} options={{ headerTitle: 'Weekly Planner' }} />

@@ -173,17 +173,6 @@ const GWACalc = ({ navigation }) => {
           <Text style={styles.calculateButtonText}>Calculate GWA</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.navigationButtonsContainer}>
-        <TouchableOpacity style={styles.navigationButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-check" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navigationButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navigationButton} onPress={() => navigateToScreen('Reflect')}>
-          <MaterialCommunityIcons name="chart-line" size={40} color="white" />
-        </TouchableOpacity>
-      </View>
     </ScrollView>
   );
 };
@@ -223,7 +212,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   calculateButton: {
-    backgroundColor: '#7844fa',
+    backgroundColor: '#353766',
     padding: 10,
     borderRadius: 5,
   },

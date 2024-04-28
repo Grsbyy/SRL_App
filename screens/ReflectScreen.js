@@ -366,7 +366,7 @@ const ReflectScreen = ({ navigation }) => {
           <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <FontAwesome5 name="feather-alt" size={25} color="#6de391" />
+          <FontAwesome5 name="feather-alt" size={25} color="#844ef2" />
         </TouchableOpacity>
       </View>
     </LinearGradient>
