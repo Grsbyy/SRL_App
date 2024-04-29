@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f0f0f0', // Background color for the entire screen
-    paddingBottom: 70, 
+    paddingBottom: 20, 
   },
   content: {
     flex: 1,

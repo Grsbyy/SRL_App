@@ -310,8 +310,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   selectedFilter: {
-    backgroundColor: 'blue',
-    color: 'white',
+    backgroundColor: '#8a5dfb',
+    color: 'rgba(255,255,255,0.6)', 
   },
   closeButton: {
     backgroundColor: "#FF5733",

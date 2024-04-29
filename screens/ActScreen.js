@@ -78,7 +78,7 @@ const Act = ({ navigation }) => {
           </LinearGradient>   
 
           <LinearGradient colors={['#f071bb', '#e8647e']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
-            <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Pomodor and Feynman Techniques to optimize retention and understanding of course material.', ['#f071bb', '#e8647e'])}>
+            <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Animedoro and Feynman Techniques to optimize retention and understanding of course material.', ['#f071bb', '#e8647e'])}>
                 <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
@@ -87,6 +87,8 @@ const Act = ({ navigation }) => {
               <Text style={styles.buttonText}>Other Study Techniques</Text>
             </TouchableOpacity>           
           </LinearGradient>   
+
+          
 
           <LinearGradient colors={['#e67850', '#e3a452']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Assessing individual learning preferences and strengths to identify the most effective study techniques tailored to personal needs.', ['#e67850', '#e3a452'])}>

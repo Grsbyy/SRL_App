@@ -128,7 +128,7 @@ const ReflectScreen = ({ navigation }) => {
   const viewDiary = (diary) => {
     Alert.alert(
       `Diary Entry - ${diary.date}`,
-      `Title: ${diary.title}\nRating: ${diary.rating}\nHow the day went: ${diary.howDayWent}\nWhat I did today: ${diary.whatIDidToday}\nOthers: ${diary.others}`,
+      `Title: ${diary.title}\nRating: ${diary.rating}\nHow the day went: ${diary.howDayWent}\nWhat I did today: ${diary.whatIDidToday}\nTo Improve: ${diary.others}`,
       [{ text: 'OK' }]
     );
   };
@@ -233,7 +233,7 @@ const ReflectScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.bigInput}
-                placeholder="Others"
+                placeholder="What can I improve from today?"
                 placeholderTextColor={'rgba(255,255,255,0.5)'}
                 value={others}
                 onChangeText={(text) => setOthers(text)}
@@ -309,7 +309,7 @@ const ReflectScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.bigInput}
-                placeholder="What I did today?"
+                placeholder="What did I do today?"
                 placeholderTextColor={'rgba(255,255,255,0.5)'}
                 multiline={true}
                 value={whatIDidToday}
@@ -317,7 +317,7 @@ const ReflectScreen = ({ navigation }) => {
               />
               <TextInput
                 style={styles.bigInput}
-                placeholder="Others"
+                placeholder="What can I improve from today?"
                 placeholderTextColor={'rgba(255,255,255,0.5)'}
                 multiline={true}
                 value={others}
