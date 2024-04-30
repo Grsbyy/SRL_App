@@ -185,11 +185,20 @@ const TaskPrioritization = ({ navigation }) => {
             key={task.id}
             style={styles.diaryItem}>
             <View>
-              {new Date(task.dueDate) - new Date() < 0 && <Text>Task is due</Text>}
-              <Text>{task.dueDate}</Text>
-              <Text style={[styles.goalText, completedTask.includes(task.id) && styles.completedGoal, (new Date(task.dueDate) - new Date() < 0) && styles.goalTextDue]}>
+              {new Date(task.dueDate) - new Date() < 0 &&  <Text>Task is due</Text>}
+              <Text style={[
+                styles.goalText,
+                completedTask.includes(task.id) && styles.completedGoal,
+                (new Date(task.dueDate) - new Date() < 0) && styles.goalTextDue,  task.prioritizationScore === tasks[0].prioritizationScore && { color: '#7455F7' }]}>{task.dueDate}</Text>
+              <Text style={[
+                styles.goalText,
+                completedTask.includes(task.id) && styles.completedGoal,
+                (new Date(task.dueDate) - new Date() < 0) && styles.goalTextDue,
+                // Check if the task has the lowest prioritization score
+                task.prioritizationScore === tasks[0].prioritizationScore && { color: '#7455F7' }
+                ]}>
                 {task.title}
-              </Text>
+            </Text>
             </View>
             <TouchableOpacity key={task.id} onPress={() => {
               setSelectedTask(task);

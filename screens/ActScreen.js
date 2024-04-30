@@ -78,7 +78,7 @@ const Act = ({ navigation }) => {
           </LinearGradient>   
 
           <LinearGradient colors={['#771D32', '#E65758']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
-            <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Animedoro and Feynman Techniques to optimize retention and understanding of course material.', ['#f071bb', '#e8647e'])}>
+            <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Animedoro and Feynman Techniques to optimize retention and understanding of course material.', ['#771D32', '#E65758'])}>
                 <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
@@ -154,13 +154,13 @@ const Act = ({ navigation }) => {
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-month" size={30} color="#A9A9A9" />
+          <MaterialCommunityIcons name="calendar-month" size={35} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#e67850" />
+          <MaterialCommunityIcons name="book-open-page-variant" size={35} color="#e67850" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <FontAwesome5 name="feather-alt" size={25} color="#A9A9A9" />
+          <FontAwesome5 name="feather-alt" size={30} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
 
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: 70,
-    paddingBottom: 20
+    paddingBottom: 10,
   },
   bottomButton: {
     borderRadius: 5,

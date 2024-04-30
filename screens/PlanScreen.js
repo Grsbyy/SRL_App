@@ -100,13 +100,13 @@ const Plan = ({ navigation }) => {
       {/* Bottom buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Plan')}>
-          <MaterialCommunityIcons name="calendar-month" size={30} color="#f071bb" />
+          <MaterialCommunityIcons name="calendar-month" size={35} color="#f071bb" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Act')}>
-          <MaterialCommunityIcons name="book-open-page-variant" size={30} color="#A9A9A9" />
+          <MaterialCommunityIcons name="book-open-page-variant" size={35} color="#A9A9A9" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton} onPress={() => navigateToScreen('Reflect')}>
-          <FontAwesome5 name="feather-alt" size={25} color="#A9A9A9" />
+          <FontAwesome5 name="feather-alt" size={30} color="#A9A9A9" />
         </TouchableOpacity>
       </View>
     </LinearGradient>
@@ -194,13 +194,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: 70,
-    paddingBottom: 20
+    paddingBottom: 10
   },
   bottomButton: {
     borderRadius: 5,
     padding: 5,
     alignItems: 'center',
-    width: '30%',
+    width: '40%',
   },
 
 });

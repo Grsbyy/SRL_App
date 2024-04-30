@@ -111,7 +111,7 @@ const Other = ({ navigation }) => {
       <View style={styles.header}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search Academic Strategies"
+          placeholder="Search Techniques"
           placeholderTextColor={'rgba(255,255,255,0.8)'}
           value={searchText}
           onChangeText={text => setSearchText(text)}
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   closeButton: {
-    backgroundColor: "#FF5733",
+    backgroundColor: "#633ef7",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
