@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { AntDesign, Entypo } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('task.db');
@@ -178,7 +179,7 @@ const TaskPrioritization = ({ navigation }) => {
       <Text style={styles.header}>YOUR TASKS</Text>
       
       <View style={styles.tasksContainer}>
-        <ScrollView style={[styles.diariesContainer, , { paddingBottom: 100 }]}>
+        <ScrollView style={[styles.diariesContainer, , { paddingBottom: 10 }]}>
         {tasks.map(task => (
           <TouchableOpacity
             key={task.id}
@@ -375,7 +376,9 @@ const TaskPrioritization = ({ navigation }) => {
           setSelectedTask(null);
           resetInputs();
         }}>
-        <MaterialCommunityIcons name="plus" size={24} color="white" />
+        <LinearGradient colors={['#633ef7', '#b63ef7']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.addButtonGradient}>
+          <MaterialCommunityIcons name="plus" size={24} color="white" />
+        </LinearGradient>
       </TouchableOpacity>
       
     </View>
@@ -439,12 +442,19 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 10,
     right: 20,
-    backgroundColor: '#8a5dfb',
+    backgroundColor: '#7455F7',
     borderRadius: 30,
     width: 60,
     height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addButtonGradient:{
+    height: '100%',
+    width: '100%',
+    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },

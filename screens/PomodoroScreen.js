@@ -7,8 +7,8 @@ import TimerToggleButton from "./TimerToggleButton";
 import { Audio } from "expo-av";
 
 
-const FOCUS_TIME_MINUTES = 2 * 60 * 1000;
-const BREAK_TIME_MINUTES = 1 * 60 * 1000;
+const FOCUS_TIME_MINUTES = 25 * 60 * 1000;
+const BREAK_TIME_MINUTES = 5 * 60 * 1000;
 
 // Import sound files
 const focusSound = require("./focus_sound.mp3");

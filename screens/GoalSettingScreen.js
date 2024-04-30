@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, Modal 
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import * as SQLite from 'expo-sqlite';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const db = SQLite.openDatabase('goals.db');
 
@@ -128,7 +129,9 @@ const GoalSetting = ({ navigation }) => {
           setModalVisible(true);
         }}
       >
-        <MaterialCommunityIcons name="plus" size={40} color="white" />
+       <LinearGradient colors={['#633ef7', '#b63ef7']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.addButtonGradient}>
+          <MaterialCommunityIcons name="plus" size={40} color="white" />
+        </LinearGradient>
       </TouchableOpacity>
 
       <Modal
@@ -208,12 +211,19 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 10,
     right: 20,
     backgroundColor: '#8a5dfb',
     borderRadius: 50,
     width: 60,
     height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addButtonGradient:{
+    height: '100%',
+    width: '100%',
+    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },

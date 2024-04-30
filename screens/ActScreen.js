@@ -66,7 +66,7 @@ const Act = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
 
-          <LinearGradient colors={['#764BA2', '#667EEA']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
+          <LinearGradient colors={['#633ef7', '#b63ef7']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Employing various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.', ['#633ef7', '#b63ef7'])}>
                 <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
@@ -77,14 +77,14 @@ const Act = ({ navigation }) => {
             </TouchableOpacity>           
           </LinearGradient>   
 
-          <LinearGradient colors={['#633ef7', '#b63ef7']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
+          <LinearGradient colors={['#771D32', '#E65758']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Animedoro and Feynman Techniques to optimize retention and understanding of course material.', ['#f071bb', '#e8647e'])}>
                 <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
               onPress={() => navigateToScreen('Other')}>           
-              <Text style={styles.buttonText}>Other Study Techniques</Text>
+              <Text style={styles.buttonText}>Time Management Techniques</Text>
             </TouchableOpacity>           
           </LinearGradient>
 
