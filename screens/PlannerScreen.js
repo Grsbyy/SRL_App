@@ -1,364 +1,130 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, Modal, Alert } from 'react-native';
-import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import { Calendar } from 'react-native-calendars';
 
-// Open or create the SQLite database
-const db = SQLite.openDatabase('WeeklyPlanner.db');
+const db = SQLite.openDatabase('calendar.db');
 
-const WPlanner = ({ navigation }) => {
-  const [mondayTask, setMondayTask] = useState('');
-  const [tuesdayTask, setTuesdayTask] = useState('');
-  const [wednesdayTask, setWednesdayTask] = useState('');
-  const [thursdayTask, setThursdayTask] = useState('');
-  const [fridayTask, setFridayTask] = useState('');
-  const [saturdayTask, setSaturdayTask] = useState('');
-  const [sundayTask, setSundayTask] = useState('');
-  const [editDay, setEditDay] = useState('');
-  const [editTask, setEditTask] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+export default function App() {
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [events, setEvents] = useState([]);
+  const [title, setTitle] = useState('');
+  const [notes, setNotes] = useState('');
+  const [markedDates, setMarkedDates] = useState({});
 
-  // Function to initialize the database table
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS planner_tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, day TEXT, task TEXT);'
-      );
-    });
-    refreshTasks();
+    createTable();
+    fetchEvents();
   }, []);
 
-  // Function to handle saving task to database
-  const saveTask = (day, task) => {
-    db.transaction(
-      tx => {
-        tx.executeSql(
-          'INSERT OR REPLACE INTO planner_tasks (day, task) VALUES (?, ?)',
-          [day, task],
-          (_, { rowsAffected, insertId }) => {
-            if (rowsAffected > 0) {
-              console.log(`Task saved for ${day}`);
-            } else {
-              console.log(`Failed to save task for ${day}.`);
-            }
-          }
-        );
-      },
-      null,
-      refreshTasks
-    );
-  };
+  useEffect(() => {
+    markDatesWithEvents();
+  }, [events]);
 
-  // Function to handle refreshing tasks
-  const refreshTasks = () => {
+  const createTable = () => {
     db.transaction(tx => {
       tx.executeSql(
-        'SELECT * FROM planner_tasks',
+        'CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, title TEXT, notes TEXT);'
+      );
+    });
+  };
+
+  const fetchEvents = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM events;',
         [],
         (_, { rows }) => {
-          const tasks = rows._array;
-          tasks.forEach(task => {
-            switch (task.day) {
-              case 'Monday':
-                setMondayTask(task.task);
-                break;
-              case 'Tuesday':
-                setTuesdayTask(task.task);
-                break;
-              case 'Wednesday':
-                setWednesdayTask(task.task);
-                break;
-              case 'Thursday':
-                setThursdayTask(task.task);
-                break;
-              case 'Friday':
-                setFridayTask(task.task);
-                break;
-              case 'Saturday':
-                setSaturdayTask(task.task);
-                break;
-              case 'Sunday':
-                setSundayTask(task.task);
-                break;
-            }
-          });
+          const fetchedEvents = rows._array;
+          setEvents(fetchedEvents);
+          markDatesWithEvents(fetchedEvents);
         }
       );
     });
   };
 
-  // Function to handle clearing tasks from database
-  const clearTasks = () => {
-    db.transaction(
-      tx => {
-        tx.executeSql('DELETE FROM planner_tasks', [], () => console.log('Tasks cleared from database'));
-      },
-      null,
-      refreshTasks
-    );
+  const handleDayPress = (day) => {
+    setSelectedDate(day.dateString);
   };
 
-  // Function to handle opening the edit modal
-  const openEditModal = (day, task) => {
-    setEditDay(day);
-    setEditTask(task);
-    setModalVisible(true);
+  const handleAddEvent = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'INSERT INTO events (date, title, notes) VALUES (?, ?, ?);',
+        [selectedDate, title, notes],
+        (_, { insertId }) => {
+          const newEvent = { id: insertId, date: selectedDate, title, notes };
+          setEvents([...events, newEvent]);
+          setTitle('');
+          setNotes('');
+          markDatesWithEvents([...events, newEvent]);
+        }
+      );
+    });
   };
 
-  // Function to handle applying changes in the edit modal
-  const applyChanges = () => {
-    saveTask(editDay, editTask);
-    setModalVisible(false);
-  };
+  const markDatesWithEvents = (eventsArray = []) => {
+    const markedDatesObj = {};
 
-  // Function to handle canceling changes in the edit modal
-  const cancelChanges = () => {
-    setModalVisible(false);
-  };
+    // Iterate through eventsArray or events and mark their corresponding dates
+    (eventsArray.length ? eventsArray : events).forEach(event => {
+      markedDatesObj[event.date] = { customStyles: { container: { backgroundColor: 'blue', borderRadius: 15 }, text: { color: 'white' } } };
+    });
 
-  // Function to navigate to respective screens
-  const navigateToScreen = (screenName) => {
-    navigation.navigate(screenName);
+    setMarkedDates(markedDatesObj);
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.content}>
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Monday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Monday', mondayTask)}>
-          <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={mondayTask}
-            onChangeText={text => setMondayTask(text)}
-            onBlur={() => saveTask('Monday', mondayTask)}
-          />
-        </View>
-
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Tuesday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Tuesday', tuesdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={tuesdayTask}
-            onChangeText={text => setTuesdayTask(text)}
-            onBlur={() => saveTask('Tuesday', tuesdayTask)}
-          />
-        </View>
-
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Wednesday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Wednesday', wednesdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={wednesdayTask}
-            onChangeText={text => setWednesdayTask(text)}
-            onBlur={() => saveTask('Wednesday', wednesdayTask)}
-          />
-        </View>
-
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Thursday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Thursday', thursdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={thursdayTask}
-            onChangeText={text => setThursdayTask(text)}
-            onBlur={() => saveTask('Thursday', thursdayTask)}
-          />
-        </View>
-
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Friday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Friday', fridayTask)}>
-             <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={fridayTask}
-            onChangeText={text => setFridayTask(text)}
-            onBlur={() => saveTask('Friday', fridayTask)}
-          />
-        </View>
-
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Saturday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Saturday', saturdayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={saturdayTask}
-            onChangeText={text => setSaturdayTask(text)}
-            onBlur={() => saveTask('Saturday', saturdayTask)}
-          />
-        </View>
-
-        <View style={styles.dayContainer}>
-          <Text style={[styles.dayLabel, { borderColor: '#662bfa' }]}>Sunday</Text>
-          <TouchableOpacity onPress={() => openEditModal('Sunday', sundayTask)}>
-            <FontAwesome name="pencil-square-o" size={30} color="#B4B4B4" />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.taskInput}
-            multiline
-            value={sundayTask}
-            onChangeText={text => setSundayTask(text)}
-            onBlur={() => saveTask('Sunday', sundayTask)}
-          />
-        </View>
-        
-      </ScrollView>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
+    <View style={{ flex: 1 }}>
+      <Calendar
+        current={selectedDate}
+        onDayPress={handleDayPress}
+        markedDates={markedDates}
+        markingType={'custom'}
+        style={{ marginBottom: 20 }}
+        renderDot={(date, today, marking) => {
+          return (
+            <View style={{ backgroundColor: marking.selected ? 'blue' : marking.marked ? 'blue' : 'transparent', width: 30, height: 30, borderRadius: 15 }}></View>
+          );
         }}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalDay}>{editDay}</Text>
-            <TextInput
-              style={styles.modalTaskInput}
-              multiline
-              value={editTask}
-              onChangeText={text => setEditTask(text)}
-            />
-            <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.applyButton} onPress={applyChanges}>
-                <Text style={styles.buttonText}>Apply Changes</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.cancelButton} onPress={cancelChanges}>
-                <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
+      />
+      <ScrollView>
+        <View style={{ paddingHorizontal: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
+            {selectedDate}
+          </Text>
+          <TextInput
+            style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 10 }}
+            placeholder="Title"
+            value={title}
+            onChangeText={text => setTitle(text)}
+          />
+          <TextInput
+            style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 20 }}
+            placeholder="Notes"
+            multiline
+            numberOfLines={4}
+            value={notes}
+            onChangeText={text => setNotes(text)}
+          />
+          <TouchableOpacity
+            style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
+            onPress={handleAddEvent}
+          >
+            <Text style={{ color: '#fff', textAlign: 'center' }}>Add Event</Text>
+          </TouchableOpacity>
+          <View style={{ marginTop: 20 }}>
+            {events
+              .filter(event => event.date === selectedDate)
+              .map(event => (
+                <View key={event.id} style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 10 }}>
+                  <Text style={{ fontWeight: 'bold' }}>{event.title}</Text>
+                  <Text>{event.notes}</Text>
+                </View>
+              ))}
           </View>
         </View>
-      </Modal>
-
+      </ScrollView>
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f0f0f0', // Background color for the entire screen
-    paddingBottom: 20, 
-  },
-  content: {
-    flex: 1,
-    width: '100%',
-    marginBottom: 30,
-  },
-  dayContainer: {
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 20,
-    color: '#662bfa',
-    backgroundColor: '#fff',
-    elevation: 5,
-
-  },
-  dayLabel: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-    color: '#50448E'
-  },
-  taskInput: {
-    borderWidth: 1,
-    borderColor: '#C4C1CD',
-    borderRadius: 10,
-    padding: 10,
-    minHeight: 100,
-    marginBottom: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-  },
-  modalDay: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalTaskInput: {
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
-    borderRadius: 5,
-    padding: 10,
-    minHeight: 100,
-    marginBottom: 10,
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  applyButton: {
-    backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 5,
-  },
-  cancelButton: {
-    backgroundColor: '#FF5733',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginLeft: 5,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center', // Center the buttons horizontally
-    width: '100%',
-    paddingHorizontal: 20, // Adjust as needed
-    paddingBottom: 10,
-    paddingVertical: 10,
-    backgroundColor: '#8a5dfb', // Change to desired color
-    borderRadius: 10, // Add border radius for a rounded look
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 35, // Add spacing between buttons
-  },
-});
-
-export default WPlanner;
+}

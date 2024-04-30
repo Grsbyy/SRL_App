@@ -87,8 +87,8 @@ const Plan = ({ navigation }) => {
             <LinearGradient colors={['#4868db', '#6de391']}  start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.iconContainer}>
               <FontAwesome5 name='calendar-week' size={25} color='#fff'></FontAwesome5>
             </LinearGradient>
-            <Text style={[styles.buttonText, {color: '#5dba9e'}]}>Weekly Planner</Text>
-            <Text style={styles.buttonExplanation}>Organizing tasks and assignments for each week to effectively manage time.</Text>
+            <Text style={[styles.buttonText, {color: '#5dba9e'}]}>Calendar Planner</Text>
+            <Text style={styles.buttonExplanation}>Organizing tasks and events in an calendar to effectively manage time.</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
