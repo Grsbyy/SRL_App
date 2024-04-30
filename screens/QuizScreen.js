@@ -185,9 +185,9 @@ const QuizPrio = ({ navigation }) => {
             key={quiz.id}
             style={styles.diaryItem}>
             <View>
-              {new Date(quiz.dueDate) - new Date() < 0 && <Text>Task is due</Text>}
-              <Text>{quiz.dueDate}</Text>
-              <Text style={[styles.goalText, completedTask.includes(quiz.id) && styles.completedGoal, (new Date(quiz.dueDate) - new Date() < 0) && styles.goalTextDue]}>
+              {new Date(quiz.dueDate) - new Date() < 0 && <Text>Quiz is due</Text>}
+              <Text style={[styles.goalText, completedTask.includes(quiz.id) && styles.completedGoal, (new Date(quiz.dueDate) - new Date() < 0) && styles.goalTextDue, quiz.prioritizationScore === tasks[0].prioritizationScore && { color: '#7455F7' }]}>{quiz.dueDate}</Text>
+              <Text style={[styles.goalText, completedTask.includes(quiz.id) && styles.completedGoal, (new Date(quiz.dueDate) - new Date() < 0) && styles.goalTextDue, quiz.prioritizationScore === tasks[0].prioritizationScore && { color: '#7455F7' }]}>
                 {quiz.title}
               </Text>
             </View>

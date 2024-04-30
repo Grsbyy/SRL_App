@@ -68,7 +68,7 @@ const Act = ({ navigation }) => {
 
           <LinearGradient colors={['#633ef7', '#b63ef7']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Employing various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.', ['#633ef7', '#b63ef7'])}>
-                <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
+                <MaterialCommunityIcons name='information-outline' size={22} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
@@ -79,7 +79,7 @@ const Act = ({ navigation }) => {
 
           <LinearGradient colors={['#771D32', '#E65758']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Animedoro and Feynman Techniques to optimize retention and understanding of course material.', ['#771D32', '#E65758'])}>
-                <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
+                <MaterialCommunityIcons name='information-outline' size={22} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
@@ -90,19 +90,19 @@ const Act = ({ navigation }) => {
 
           <LinearGradient colors={['#FF61D2', '#FE9090']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('The Pomodoro Technique is a time management method that involves breaking work into intervals, typically 25 minutes in length, separated by 5-minute breaks, aiming to enhance focus and productivity.', ['#f071bb', '#e8647e'])}>
-                <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
+                <MaterialCommunityIcons name='information-outline' size={22} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
               onPress={() => navigateToScreen('Pomodoro')}>           
-              <Text style={styles.buttonText}>Use Pomodoro</Text>
+              <Text style={styles.buttonText}>Use Pomodoro Technique</Text>
             </TouchableOpacity>           
           </LinearGradient>   
           
 
           <LinearGradient colors={['#e67850', '#e3a452']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Assessing individual learning preferences and strengths to identify the most effective study techniques tailored to personal needs.', ['#e67850', '#e3a452'])}>
-                <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
+                <MaterialCommunityIcons name='information-outline' size={22} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
@@ -113,7 +113,7 @@ const Act = ({ navigation }) => {
 
           <LinearGradient colors={['#4868db', '#6de391']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Utilizing a tool to track and calculate General Weighted Average (GWA) based on grades earned in courses, providing insight into academic performance.', ['#4868db', '#6de391'])}>
-                <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
+                <MaterialCommunityIcons name='information-outline' size={22} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
             <TouchableOpacity
               style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
@@ -148,7 +148,7 @@ const Act = ({ navigation }) => {
       </Modal>
 
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.settingsButton}>
-        <Entypo name="home" size={20} color="rgba(255, 255, 255, 0.8)" paddingRight={10} paddingTop={10} />
+        <Entypo name="home" size={30} color="rgba(255, 255, 255, 0.8)" paddingRight={10} paddingTop={10} />
       </TouchableOpacity>
 
       {/* Bottom buttons */}
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 30, 
     height: 30,
-    top: 10,
+    top: 5,
     right: 0,
 
   },

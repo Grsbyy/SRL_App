@@ -130,6 +130,17 @@ const GWACalc = ({ navigation }) => {
     return unitsMap[subject] || 0;
   };
 
+  const getLowestGrades = (gradeData) => {
+    const products = Object.entries(gradeData).map(([subject, grade]) => {
+      return {
+        subject,
+        product: (5.0 - grade) * getSubjectUnits(subject)
+      };
+    });
+    products.sort((a, b) => a.product - b.product);
+    return products.slice(0, 3).map(item => item.subject);
+  };
+
   return (
     <LinearGradient colors={['#373856', '#121327']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.container} >
 
@@ -169,13 +180,27 @@ const GWACalc = ({ navigation }) => {
           </View>
         ))}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.calculateButton} onPress={() => Alert.alert(
-            "GWA Result", 
-            `Your GWA is: ${calculateGWA()} ${calculateGWA() <= 1.50 ? "Congratulations! You Are Part of the Director's List!":""}`,
-            [
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-          )}>
+          <TouchableOpacity style={styles.calculateButton} onPress={() => {
+            const gwa = calculateGWA();
+            const lowestSubjects = getLowestGrades(grades[selectedGrade]);
+            if (gwa <= 1.50) {
+              Alert.alert(
+                "GWA Result", 
+                `Congratulations! Your GWA is: ${gwa}. You are part of the Director's List!`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            } else {
+              Alert.alert(
+                "GWA Result", 
+                `Your GWA is: ${gwa}. \nConsider improving grades in: ${lowestSubjects.join(', ')} to be part of the Director's List.`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+            }
+          }}>
             <Text style={styles.calculateButtonText}>Calculate GWA</Text>
           </TouchableOpacity>
         </View>
