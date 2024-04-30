@@ -5,7 +5,7 @@ import TimerCountDownDisplay from "./TimerCountDownDisplay";
 import TimerModeDisplay, { TimerModes } from "./TimerModeDisplay";
 import TimerToggleButton from "./TimerToggleButton";
 import { Audio } from "expo-av";
-
+import { LinearGradient } from "expo-linear-gradient";
 
 const FOCUS_TIME_MINUTES = 25 * 60 * 1000;
 const BREAK_TIME_MINUTES = 5 * 60 * 1000;
@@ -82,11 +82,13 @@ export default function App() {
   };
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        backgroundColor: timerMode === "Break" ? "#2a9d8f" : "#d95550",
-      }}
+    <LinearGradient
+      colors={
+        timerMode === "Focus"
+          ? ["#d95550", "#ea6a88"]
+          : ["#2a9d8f", "#43cfaf"]
+      }
+      style={styles.container}
     >
       <StatusBar style="auto" />
       <TimerModeDisplay timerMode={timerMode} />
@@ -97,14 +99,13 @@ export default function App() {
         isTimerRunning={isTimerRunning}
       />
       <TimerCountDownDisplay countDownDate={new Date(timerCount)} />
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#d95550",
     alignItems: "center",
     justifyContent: "center",
   },
