@@ -148,7 +148,7 @@ const GWACalc = ({ navigation }) => {
         </View>
         {Object.entries(grades[selectedGrade]).map(([subject, grade], index) => (
           <View key={index} style={styles.subjectContainer}>
-            <Text style={styles.subjectLabel}>{subject} ({getSubjectUnits(subject)} Units)</Text>
+            <Text style={styles.subjectLabel}>{subject} ({getSubjectUnits(subject)} {getSubjectUnits(subject) === 1 || getSubjectUnits(subject) === 1.0 ? 'Unit' : 'Units'})</Text>
             <Picker
               style={styles.gradeInput}
               dropdownIconColor={'white'}

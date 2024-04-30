@@ -66,7 +66,7 @@ const Act = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
 
-          <LinearGradient colors={['#633ef7', '#b63ef7']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
+          <LinearGradient colors={['#764BA2', '#667EEA']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Employing various methods such as note-taking, mnemonic devices, and concept mapping to enhance learning and comprehension.', ['#633ef7', '#b63ef7'])}>
                 <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
@@ -77,7 +77,7 @@ const Act = ({ navigation }) => {
             </TouchableOpacity>           
           </LinearGradient>   
 
-          <LinearGradient colors={['#f071bb', '#e8647e']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
+          <LinearGradient colors={['#633ef7', '#b63ef7']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
             <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('Exploring additional methods such as Animedoro and Feynman Techniques to optimize retention and understanding of course material.', ['#f071bb', '#e8647e'])}>
                 <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
             </TouchableOpacity>
@@ -86,8 +86,18 @@ const Act = ({ navigation }) => {
               onPress={() => navigateToScreen('Other')}>           
               <Text style={styles.buttonText}>Other Study Techniques</Text>
             </TouchableOpacity>           
-          </LinearGradient>   
+          </LinearGradient>
 
+          <LinearGradient colors={['#FF61D2', '#FE9090']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
+            <TouchableOpacity style={styles.infoButton} onPress={() => toggleModal('The Pomodoro Technique is a time management method that involves breaking work into intervals, typically 25 minutes in length, separated by 5-minute breaks, aiming to enhance focus and productivity.', ['#f071bb', '#e8647e'])}>
+                <MaterialCommunityIcons name='information-outline' size={17} color='rgba(255,255,255,0.8)'></MaterialCommunityIcons>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}
+              onPress={() => navigateToScreen('Pomodoro')}>           
+              <Text style={styles.buttonText}>Use Pomodoro</Text>
+            </TouchableOpacity>           
+          </LinearGradient>   
           
 
           <LinearGradient colors={['#e67850', '#e3a452']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.button}>
@@ -184,7 +194,13 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 100,
+    width: 320, 
+    marginTop: 20, 
+  },
+  scrollContainer: {
+    alignSelf: 'center',
+    alignItems: 'center'
   },
   button: {
     backgroundColor: '#7455F7',

@@ -31,7 +31,6 @@ const AcadStrat = ({ navigation }) => {
 
     { name: 'Reading Aloud', type: 'Verbal Learning Strategy', description: 'Read textbooks, notes, or study materials aloud to reinforce auditory learning through repetition.' },
     { name: 'Explaining', type: 'Verbal Learning Strategy', description: 'Teach concepts or explain ideas to others in your own words. Verbalizing helps clarify understanding.' },
-    { name: 'Group Discussions', type: 'Verbal Learning Strategy', description: 'Participate in group discussions or study sessions to verbalize thoughts, share ideas, and gain new perspectives.' },
     { name: 'Reciting', type: 'Verbal Learning Strategy', description: 'Recite key points, definitions, or formulas from memory to reinforce learning through repetition and recall.' },
     { name: 'Debates', type: 'Verbal Learning Strategy', description: 'Engage in debates or discussions on academic topics to develop critical thinking and verbal communication skills.' },
     { name: 'Self-Talk', type: 'Verbal Learning Strategy', description: 'Talk yourself through problem-solving processes or study tasks. Verbalize your thoughts and strategies aloud.' },
@@ -53,7 +52,7 @@ const AcadStrat = ({ navigation }) => {
     { name: 'Teaching Others', type: 'Kinesthetic Learning Strategy', description: 'Teach concepts or explain ideas to others using hands-on demonstrations or interactive activities to deepen understanding.' },
 
     { name: 'Independent Study', type: 'Solitary Learning Strategy', description: ' Set aside dedicated time for self-study in a quiet and comfortable environment, free from distractions.' },
-    { name: 'Self-Reflection:', type: 'Solitary Learning Strategy', description: 'Reflect on your learning progress, strengths, and areas for improvement. Keep a journal to record insights and observations.' },
+    { name: 'Self-Reflection', type: 'Solitary Learning Strategy', description: 'Reflect on your learning progress, strengths, and areas for improvement. Keep a journal to record insights and observations.' },
     { name: 'Self-Assessment', type: 'Solitary Learning Strategy', description: 'Assess your understanding of concepts and materials through self-testing, quizzes, or practice exams.' },
    
     { name: 'Study Groups', type: 'Social Learning Strategy', description: 'Form or join study groups with classmates or peers to collaborate on assignments, discuss course materials, and share study resources.' },

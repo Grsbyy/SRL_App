@@ -15,7 +15,7 @@ import Planner from './screens/PlannerScreen';
 import AddTaskScreen from './screens/AddTaskScreen';
 import otherScreen from './screens/otherScreen'
 import QuizScreen from './screens/QuizScreen';
-
+import PomodoroScreen from './screens/PomodoroScreen'
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -45,6 +45,7 @@ const App = () => {
         <Stack.Screen name="WPlanner" component={Planner} options={{ headerTitle: 'Weekly Planner' }} />
         <Stack.Screen name="AddTask" component={AddTaskScreen} options={{ headerShown: null }}/>
         <Stack.Screen name="Other" component={otherScreen} options={{ headerTitle: 'Other Strategies' }}/>
+        <Stack.Screen name="Pomodoro" component={PomodoroScreen} options={{ headerTitle: 'Pomodoro Screen' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
